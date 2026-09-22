@@ -60,7 +60,9 @@
         </p>
       </div>
       <figure class="hero-p">
-        <span class="slot">Műtermi kép<br><i>ide kerül a fotód</i></span>
+        <img src="assets/studio/norbert-hero.jpg"
+             alt="Vámos Norbert a stúdióban, bárszéken ülve"
+             width="1200" height="1600" fetchpriority="high">
       </figure>
     </div>
   </section>
@@ -70,6 +72,11 @@
       <div class="two-l">
         <p class="eyebrow">Bemutatkozás</p>
         <h2>Több mint tíz éve<br>tetoválok.</h2>
+        <figure class="portre">
+          <img src="assets/studio/norbert-portre.jpg" alt="Vámos Norbert"
+               width="800" height="1000" loading="lazy">
+          <figcaption>Vámos Norbert</figcaption>
+        </figure>
       </div>
       <div class="two-r prose">
         <p>
@@ -113,14 +120,14 @@
     </div>
     <div class="wrap gal">
       <figure class="g g-hero">
-        <img src="assets/gallery/01-angyal.jpg" alt="Fineline angyalfigura karon, geometrikus kerettel" width="1400" height="1400" loading="lazy">
+        <img src="assets/gallery-web/01-angyal.jpg" alt="Fineline angyalfigura karon, geometrikus kerettel" width="1400" height="1400" loading="lazy">
       </figure>
-      <figure class="g"><img src="assets/gallery/02-memento-mori.jpg" alt="Memento Mori felirat két érintkező kézzel, finom vonalas munka" width="1400" height="1400" loading="lazy"></figure>
-      <figure class="g"><img src="assets/gallery/03-vonalas.jpg" alt="Sűrű vonalakból kirajzolódó absztrakt alak alkaron" width="1400" height="1400" loading="lazy"></figure>
-      <figure class="g"><img src="assets/gallery/04-teknos-wanderlust.jpg" alt="Mikrorealista teknős Wanderlust felirattal és körökkel" width="1400" height="1400" loading="lazy"></figure>
-      <figure class="g"><img src="assets/gallery/05-szem-fonix.jpg" alt="Szem és főnixmadár pontozott körökkel, alkaron" width="1400" height="1400" loading="lazy"></figure>
-      <figure class="g"><img src="assets/gallery/06-buddha.jpg" alt="Kettéválasztott Buddha-fej geometrikus vonalakkal" width="1400" height="1400" loading="lazy"></figure>
-      <figure class="g"><img src="assets/gallery/07-ora-motionless.jpg" alt="Olvadó ébresztőóra Motionless felirattal" width="1400" height="1400" loading="lazy"></figure>
+      <figure class="g"><img src="assets/gallery-web/02-memento-mori.jpg" alt="Memento Mori felirat két érintkező kézzel, finom vonalas munka" width="1400" height="1400" loading="lazy"></figure>
+      <figure class="g"><img src="assets/gallery-web/03-vonalas.jpg" alt="Sűrű vonalakból kirajzolódó absztrakt alak alkaron" width="1400" height="1400" loading="lazy"></figure>
+      <figure class="g"><img src="assets/gallery-web/04-teknos-wanderlust.jpg" alt="Mikrorealista teknős Wanderlust felirattal és körökkel" width="1400" height="1400" loading="lazy"></figure>
+      <figure class="g"><img src="assets/gallery-web/05-szem-fonix.jpg" alt="Szem és főnixmadár pontozott körökkel, alkaron" width="1400" height="1400" loading="lazy"></figure>
+      <figure class="g"><img src="assets/gallery-web/06-buddha.jpg" alt="Kettéválasztott Buddha-fej geometrikus vonalakkal" width="1400" height="1400" loading="lazy"></figure>
+      <figure class="g"><img src="assets/gallery-web/07-ora-motionless.jpg" alt="Olvadó ébresztőóra Motionless felirattal" width="1400" height="1400" loading="lazy"></figure>
       <blockquote class="g-note">
         <p>
           Különösen közel állnak hozzám a személyes történetekből születő
@@ -480,10 +487,32 @@
         <p class="eyebrow">Vélemények</p>
         <h2>Amit a vendégeim írtak</h2>
       </header>
-      <div class="rev-slot">
-        <p>Ide kerülnek a Google-értékelések.</p>
-        <p class="rev-n">A Google-profil linkjére várok — utána a valódi értékelések jelennek meg itt.</p>
+
+      <div class="rev">
+        <div class="rev-t">
+          <p class="rev-st" aria-hidden="true">★★★★★</p>
+          <p class="rev-h">Értékelések a Google-on</p>
+          <p class="rev-x">
+            A rólam szóló véleményeket a Google-profilomon találod. Ha nálam
+            készült a tetoválásod, néhány mondat sokat segít azoknak, akik még
+            csak most ismerkednek a munkáimmal.
+          </p>
+        </div>
+        <p class="rev-b">
+          <a class="btn btn-l" href="https://g.page/r/CZ-XETu7AiRvEAE/review"
+             target="_blank" rel="noopener">Értékelést írok</a>
+        </p>
       </div>
+
+      <!-- Ha Norbert küld 2–3 értékelést szó szerint, ide kerülnek idézetként:
+      <div class="revs">
+        <blockquote class="rev-q">
+          <p>Az értékelés szövege.</p>
+          <cite>Keresztnév · 2026</cite>
+        </blockquote>
+      </div>
+      -->
+
     </div>
   </section>
 
@@ -515,10 +544,25 @@
           <p class="err" data-for="f-el"></p>
         </div>
 
-        <div class="fld fld-chk">
-          <input id="f-korr" name="korrekcio" type="checkbox">
-          <label for="f-korr">Korrekciót szeretnék jelezni egy nálam készült tetoválásra</label>
+        <div class="chk-group">
+          <div class="fld fld-chk">
+            <input id="f-korr" name="korrekcio" type="checkbox">
+            <label for="f-korr">Korrekciót szeretnék jelezni egy nálam készült tetoválásra</label>
+          </div>
+          <div class="fld fld-chk">
+            <input id="f-elso" name="elso" type="checkbox">
+            <label for="f-elso">Ez lesz az első tetoválásom</label>
+          </div>
         </div>
+        <p class="chk-note" id="note-korr" hidden>
+          Korrekciónál a fotó, a leírás és a lehetséges időpontok elegendők —
+          a testrészt és a méretet a meglévő tetoválásból látom, ezért azokat a
+          mezőket kikapcsoltam.
+        </p>
+        <p class="chk-note" id="note-elso" hidden>
+          Köszönöm, hogy jelezted. Az első alkalom előtt mindent részletesen
+          átbeszélünk, és nyugodtan kérdezz bármit — semmi sem túl apró.
+        </p>
 
         <div class="fld" id="fld-otlet">
           <label for="f-otlet">Mi az elképzelésed?</label>
