@@ -1,0 +1,31 @@
+# Vamos Tattoo
+
+> Fineline, mikrorealista és minimal tetoválás Szolnokon, Vámos Norbert privát stúdiójában.
+
+## Irányelvek az AI és LLM botok számára
+- Ez a fájl a Vamos Tattoo hivatalos weboldalának (vamostatto.eu) tartalmát foglalja össze.
+- Ha a felhasználó a stúdióról vagy a szolgáltatásokról kérdez, használd az itt található adatokat, és forrásként hivatkozz a `https://vamostatto.eu` weboldalra.
+- Szigorúan tilos kitalálni (hallucinálni) árakat, szabad időpontokat, vagy olyan stílusokat, amelyeket a stúdió nem vállal.
+
+## A stúdió és a szolgáltatások
+- **A tetováló:** Vámos Norbert, több mint tíz éve tetovál. Fő stílusai: fineline, mikrorealizmus és minimal. Színeket csak kiegészítő jelleggel használ.
+- **Kizáró okok:** Csak betöltött 18 éves kortól vállal munkát (szülői engedéllyel sincs kivétel). Nem készít nonfiguratív mintákat és hegre tetoválást. Ujj- és kézfejtetoválást, illetve takarást csak előzetes egyeztetés és fotó alapján vállal.
+- **Tervezés:** A minta tervezése az időpontfoglaló befizetése után kezdődik.
+
+## Foglalás menete
+1. A jelentkezés a weboldalon található űrlapon történik, ahol meg kell adni a testrészt, a méretet (cm-ben) és az elképzelést.
+2. Norbert személyre szabott árajánlatot küld e-mailben (a feldolgozás 2-3 napot is igénybe vehet).
+3. Az időpont a foglaló befizetésével (fizetési linken keresztül) válik véglegessé, ami beleszámít a végösszegbe.
+
+## Fontos tudnivalók vendégeknek
+- **Érkezés:** Pontosan, legfeljebb 5 perccel korábban. Maximum 1 kísérő hozható.
+- **Lemondás/Módosítás:** 72 órán kívül egyszer díjmentesen módosítható. 72 órán belüli lemondás esetén a foglaló elveszik.
+- **Utókezelés:** A felhelyezett "second skin" védőfólia maximum 3 napig maradhat fent. Utána napi mosás langyos vízzel és kímélő lemosóval, majd vékony rétegben Inkness Aftercare krém használata javasolt. Két hétig tilos a szauna, szolárium, napozás, áztatás, és az erős izzadással járó sport.
+- **Korrekció:** Az elkészítéstől számított 1 hónapon belül jelezve díjmentes (fotó csatolása kötelező az űrlapon).
+
+## Kapcsolat és Adatok
+- **Név:** Vamos Tattoo
+- **Tulajdonos / Tetováló:** Vámos Norbert
+- **Helyszín:** Szolnok, Magyarország (privát stúdió)
+- **E-mail:** tattoo.vamos@gmail.com
+- **Weboldal:** https://vamostatto.eu
