@@ -205,7 +205,7 @@ img { max-width: 100%; height: auto; display: block; }
 
 .inkness {
   margin-top: clamp(32px, 4vw, 48px); padding: 22px 26px;
-  background: var(--paper); border: 1px solid var(--line);
+  background: var(--band); border: 1px solid var(--line);
   display: flex; gap: 22px; align-items: center;
 }
 .inkness img { width: 72px; height: 72px; flex: 0 0 auto; }
