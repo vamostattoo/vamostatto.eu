@@ -130,13 +130,10 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin: 34px 0 0; }
 
-.hero-p { margin: 0; aspect-ratio: 4 / 5; border: 1px solid var(--line-w); display: grid; place-items: center; }
-.slot {
-  font-family: var(--f-d); font-size: 11px; font-weight: 500;
-  letter-spacing: .2em; text-transform: uppercase; color: var(--on-ink-2);
-  text-align: center; line-height: 2.2;
-}
-.slot i { font-style: normal; letter-spacing: .08em; text-transform: none; color: #6E6B65; }
+/* The studio photograph is shot against a light backdrop, so it lands on the
+   ink hero as a lit panel — no frame needed, the tonal jump is the edge. */
+.hero-p { margin: 0; aspect-ratio: 3 / 4; overflow: hidden; background: #1C1C1C; }
+.hero-p img { width: 100%; height: 100%; object-fit: cover; }
 
 /* ---------- section frame ---------- */
 
@@ -148,6 +145,14 @@ img { max-width: 100%; height: auto; display: block; }
 
 .two { display: grid; gap: clamp(28px, 5vw, 64px); grid-template-columns: .8fr 1.2fr; align-items: start; }
 .two-l h2 { font-size: clamp(30px, 4.2vw, 44px); }
+
+/* His face belongs next to his own words, not only in the hero. */
+.portre { margin: clamp(28px, 3vw, 38px) 0 0; max-width: 300px; }
+.portre img { width: 100%; }
+.portre figcaption {
+  margin-top: 12px; font-family: var(--f-d); font-size: 11px; font-weight: 600;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3);
+}
 .prose { max-width: 62ch; color: var(--ink-2); }
 .prose p { font-size: 18px; }
 
@@ -234,14 +239,28 @@ img { max-width: 100%; height: auto; display: block; }
 .tud-b li { margin-bottom: 7px; }
 .tud-b article { scroll-margin-top: 96px; }
 
-/* ---------- reviews slot ---------- */
+/* ---------- reviews ---------- */
 
-.rev-slot {
-  border: 1px dashed var(--line); padding: clamp(28px, 4vw, 44px);
-  text-align: center; color: var(--ink-2);
+.rev {
+  background: var(--paper); border: 1px solid var(--line);
+  padding: clamp(26px, 3.5vw, 44px);
+  display: grid; gap: clamp(22px, 3vw, 40px);
+  grid-template-columns: 1fr auto; align-items: center;
 }
-.rev-slot p:first-child { font-family: var(--f-d); font-size: 13px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3); }
-.rev-n { font-size: 16px; max-width: 48ch; margin-inline: auto; }
+.rev-st { font-size: 15px; letter-spacing: .3em; color: var(--ink); margin-bottom: 12px; }
+.rev-h { font-family: var(--f-d); font-size: 19px; font-weight: 600; margin-bottom: 10px; }
+.rev-x { color: var(--ink-2); font-size: 16.5px; max-width: 52ch; margin: 0; }
+.rev-b { margin: 0; }
+
+/* Quotes, once his own reviews are in. */
+.revs { display: grid; gap: 1px; grid-template-columns: repeat(3, 1fr); margin-top: 1px; background: var(--line); }
+.rev-q { margin: 0; background: var(--paper); padding: clamp(22px, 2.6vw, 30px); border: 1px solid var(--line); }
+.rev-q p { font-size: 17px; color: var(--ink-2); }
+.rev-q cite {
+  display: block; margin-top: 14px; font-style: normal;
+  font-family: var(--f-d); font-size: 11px; font-weight: 600;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3);
+}
 
 /* ---------- form ---------- */
 
@@ -272,9 +291,28 @@ img { max-width: 100%; height: auto; display: block; }
   background: transparent; border: 1px solid var(--line-w); color: var(--on-ink);
 }
 
-.fld-chk { grid-template-columns: auto 1fr; align-items: start; gap: 12px; padding: 16px 18px; border: 1px solid var(--line-w); }
+/* The two checkboxes are one decision, so they sit in one block. */
+.chk-group { display: grid; border: 1px solid var(--line-w); }
+.fld-chk { grid-template-columns: auto 1fr; align-items: start; gap: 12px; padding: 16px 18px; }
+.fld-chk + .fld-chk { border-top: 1px solid var(--line-w); }
 .fld-chk input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--on-ink); }
-.fld-chk label { text-transform: none; letter-spacing: .02em; font-size: 14px; font-weight: 500; line-height: 1.5; }
+.fld-chk label { text-transform: none; letter-spacing: .02em; font-size: 14px; font-weight: 500; line-height: 1.5; cursor: pointer; }
+
+.chk-note {
+  margin: 0; padding: 13px 16px; font-size: 15px; line-height: 1.55;
+  background: #1D1D1D; border: 1px solid var(--line-w); color: var(--on-ink-2);
+}
+
+/* Ticking "korrekció" switches off what a correction cannot answer: the
+   tattoo already exists, so its place and size are on the photograph. */
+.fld.off label, .fld.off .hint, .fld.off .req, .fld.off .opt { color: #5E5C57; }
+.fld.off label { cursor: default; }
+.form input:disabled, .form textarea:disabled {
+  background: #181818; border-color: rgba(255, 255, 255, .07);
+  color: #5E5C57; cursor: not-allowed;
+}
+.form input:disabled::placeholder { color: #4A4844; }
+.fld-chk input:disabled { cursor: not-allowed; }
 
 .hint { margin: 0; font-size: 14px; color: var(--on-ink-2); }
 .err { display: none; margin: 0; font-size: 14px; color: #E5907F; }
@@ -330,8 +368,12 @@ img { max-width: 100%; height: auto; display: block; }
 
 @media (max-width: 1000px) {
   .hero-in { grid-template-columns: 1fr; }
-  .hero-p { aspect-ratio: 16 / 9; max-width: 520px; }
+  /* Stacked, the photo stays a portrait — a standing figure does not survive
+     a letterbox crop. */
+  .hero-p { max-width: 340px; }
   .two { grid-template-columns: 1fr; }
+  .rev { grid-template-columns: 1fr; justify-items: start; }
+  .revs { grid-template-columns: 1fr; }
   .form-in { grid-template-columns: 1fr; }
   .flow { grid-template-columns: repeat(2, 1fr); }
   .fl { padding-right: 24px; }
