@@ -1,0 +1,425 @@
+/* Vamos Tattoo — Vámos Norbert, Szolnok
+   The page is built from the two materials the work itself uses: skin and
+   ink. Reading sits on a grey-bone ground; the hero, the gallery and the
+   booking form are solid ink. There is no accent colour — his identity is
+   black, and the only colour on the page is the Inkness logo, which is not
+   his. Everything else is carried by hairlines, scale and the photographs.
+
+   Single-theme on purpose: this is a client's brand site, and it must look
+   the same to every visitor whatever their OS theme is set to. */
+
+:root {
+  --bone:   #E8E6E1;   /* page ground — grey-bone, tracing paper */
+  --paper:  #F6F5F2;   /* cards, form fields */
+  --band:   #DEDBD4;   /* banded sections */
+  --ink:    #141414;   /* text, and the solid bands */
+  --ink-2:  #55534E;
+  --ink-3:  #86837C;
+  --line:   #CBC7BF;
+  --line-w: rgba(255, 255, 255, .18);
+  --on-ink: #EFEDE8;
+  --on-ink-2: #9B9891;
+  --bad:    #A33226;
+
+  --f-d: 'Archivo', system-ui, 'Segoe UI', Arial, sans-serif;
+  --f-b: 'Newsreader', Georgia, 'Times New Roman', serif;
+
+  --wrap: 1180px;
+  --gut: clamp(16px, 4vw, 40px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--bone);
+  color: var(--ink);
+  font-family: var(--f-b);
+  font-size: 18px;
+  line-height: 1.7;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 { margin: 0; font-family: var(--f-d); font-weight: 600; line-height: 1.12; text-wrap: balance; }
+p { margin: 0 0 1.05em; }
+p:last-child { margin-bottom: 0; }
+a { color: inherit; }
+img { max-width: 100%; height: auto; display: block; }
+
+.wrap { width: 100%; max-width: var(--wrap); margin-inline: auto; padding-inline: var(--gut); }
+
+.skip { position: absolute; left: -999px; top: 0; z-index: 99; background: var(--ink); color: #fff; padding: 10px 16px; }
+.skip:focus { left: 8px; top: 8px; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.form-sec :focus-visible, .gal-sec :focus-visible { outline-color: #fff; }
+
+.eyebrow {
+  font-family: var(--f-d); font-size: 11px; font-weight: 600;
+  letter-spacing: .26em; text-transform: uppercase; color: var(--ink-3);
+  margin: 0 0 18px;
+}
+.eyebrow-w { color: var(--on-ink-2); }
+.h-w { color: var(--on-ink); }
+
+/* ---------- buttons ---------- */
+
+.btn {
+  display: inline-block; text-decoration: none; cursor: pointer;
+  font-family: var(--f-d); font-size: 12px; font-weight: 600;
+  letter-spacing: .18em; text-transform: uppercase;
+  padding: 13px 22px; border: 1px solid var(--ink); background: var(--ink); color: var(--on-ink);
+  transition: background .18s ease, color .18s ease, border-color .18s ease;
+}
+.btn:hover { background: transparent; color: var(--ink); }
+.btn-l { padding: 16px 30px; }
+.btn-w { background: var(--on-ink); border-color: var(--on-ink); color: var(--ink); }
+.btn-w:hover { background: transparent; color: var(--on-ink); }
+.btn-o { background: transparent; border-color: var(--line-w); color: var(--on-ink); }
+.btn-o:hover { background: var(--on-ink); border-color: var(--on-ink); color: var(--ink); }
+.btn-full { width: 100%; }
+
+/* ---------- header ---------- */
+
+.hdr {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40;
+  background: rgba(232, 230, 225, .93);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.hdr-in { display: flex; align-items: center; gap: 24px; min-height: 72px; }
+.brand { margin-right: auto; display: block; }
+.brand img { width: 132px; height: auto; }
+
+.nav { display: flex; align-items: center; gap: 26px; }
+.nav a {
+  font-family: var(--f-d); font-size: 12px; font-weight: 500;
+  letter-spacing: .14em; text-transform: uppercase;
+  text-decoration: none; color: var(--ink); padding-block: 4px;
+  border-bottom: 1px solid transparent;
+}
+.nav a:not(.btn):hover { border-bottom-color: var(--ink); }
+/* `.nav a` outranks `.btn`, so the header CTA needs its colour restated. */
+.nav a.btn { border-bottom: 0; }
+.nav a.nav-cta { color: var(--on-ink); }
+.nav a.nav-cta:hover { color: var(--ink); }
+
+.burger { display: none; width: 42px; height: 38px; padding: 9px 8px; background: none; border: 1px solid var(--line); cursor: pointer; }
+.burger span { display: block; height: 1.5px; background: var(--ink); transition: transform .2s ease, opacity .2s ease; }
+.burger span + span { margin-top: 5px; }
+.burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ---------- hero ---------- */
+
+.hero { background: var(--ink); color: var(--on-ink); padding-block: clamp(56px, 9vw, 96px); }
+.hero-in { display: grid; gap: clamp(32px, 5vw, 56px); grid-template-columns: 1.15fr .85fr; align-items: center; }
+.hero-mark { width: min(100%, 460px); }
+.hero-sub {
+  font-family: var(--f-d); font-size: 11.5px; font-weight: 500;
+  letter-spacing: .3em; text-transform: uppercase; color: var(--on-ink-2);
+  margin: 26px 0 0;
+}
+.hero-lede {
+  font-size: clamp(20px, 2.4vw, 26px); line-height: 1.5; color: var(--on-ink);
+  max-width: 24ch; margin: 22px 0 0; font-weight: 300;
+}
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin: 34px 0 0; }
+
+/* The studio photograph is shot against a light backdrop, so it lands on the
+   ink hero as a lit panel — no frame needed, the tonal jump is the edge. */
+.hero-p { margin: 0; aspect-ratio: 3 / 4; overflow: hidden; background: #1C1C1C; }
+.hero-p img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------- section frame ---------- */
+
+.sec { padding-block: clamp(64px, 9vw, 112px); }
+.sec-band { background: var(--band); border-block: 1px solid var(--line); }
+.sec-h { max-width: 46ch; margin: 0 0 clamp(36px, 5vw, 56px); }
+.sec-h h2 { font-size: clamp(30px, 4.4vw, 46px); }
+.sec-l { color: var(--ink-2); margin: 20px 0 0; font-size: 17px; }
+
+.two { display: grid; gap: clamp(28px, 5vw, 64px); grid-template-columns: .8fr 1.2fr; align-items: start; }
+.two-l h2 { font-size: clamp(30px, 4.2vw, 44px); }
+
+/* His face belongs next to his own words, not only in the hero. */
+.portre { margin: clamp(28px, 3vw, 38px) 0 0; max-width: 300px; }
+.portre img { width: 100%; }
+.portre figcaption {
+  margin-top: 12px; font-family: var(--f-d); font-size: 11px; font-weight: 600;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3);
+}
+.prose { max-width: 62ch; color: var(--ink-2); }
+.prose p { font-size: 18px; }
+
+/* ---------- gallery ---------- */
+
+.gal-sec { background: var(--ink); padding-block: clamp(64px, 9vw, 104px); }
+.gal-h { max-width: 46ch; margin-bottom: clamp(32px, 4vw, 48px); }
+.gal-h h2 { font-size: clamp(28px, 3.8vw, 40px); }
+.gal { display: grid; gap: 14px; grid-template-columns: repeat(3, 1fr); }
+.g { margin: 0; overflow: hidden; background: #1C1C1C; }
+.g img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; transition: transform .5s ease; }
+.g-hero { grid-column: span 2; grid-row: span 2; }
+/* Seven squares and one 2x2 tile leave two cells short of a full grid, so the
+   last two carry a line of his own writing instead of a gap. */
+.g-note {
+  grid-column: span 2; margin: 0;
+  border: 1px solid var(--line-w); padding: clamp(26px, 3vw, 40px);
+  display: grid; align-content: center;
+}
+.g-note p {
+  font-family: var(--f-b); font-size: clamp(19px, 2.2vw, 26px);
+  font-weight: 300; line-height: 1.5; color: var(--on-ink);
+  max-width: 28ch; margin: 0;
+}
+.g-hero img { aspect-ratio: auto; height: 100%; }
+.g:hover img { transform: scale(1.03); }
+@media (prefers-reduced-motion: reduce) { .g img, .g:hover img { transition: none; transform: none; } }
+
+/* ---------- style cards ---------- */
+
+.cards { display: grid; gap: 1px; grid-template-columns: repeat(2, 1fr); background: var(--line); border: 1px solid var(--line); }
+.card { background: var(--paper); padding: clamp(24px, 3vw, 34px); }
+.card h3 { font-size: 21px; margin-bottom: 14px; }
+.card p { color: var(--ink-2); font-size: 16.5px; }
+/* The one card that says no carries an ink edge — it is the exception. */
+.card-no { border-left: 3px solid var(--ink); }
+
+/* ---------- booking flow ---------- */
+
+.flow { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); }
+.fl { padding: 28px 26px 30px 0; border-right: 1px solid var(--line); }
+.fl:last-child { border-right: 0; }
+.fl + .fl { padding-left: 26px; }
+.fl-k {
+  font-family: var(--f-d); font-size: 11px; font-weight: 600;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--ink);
+  margin-bottom: 14px;
+}
+.fl p:not(.fl-k) { color: var(--ink-2); font-size: 16px; }
+
+.inkness {
+  margin-top: clamp(32px, 4vw, 48px); padding: 22px 26px;
+  background: var(--paper); border: 1px solid var(--line);
+  display: flex; gap: 22px; align-items: center;
+}
+.inkness img { width: 72px; height: 72px; flex: 0 0 auto; }
+.inkness p { color: var(--ink-2); font-size: 16.5px; max-width: 56ch; }
+
+/* ---------- long-form notes ---------- */
+
+.tud { display: grid; gap: clamp(28px, 5vw, 60px); grid-template-columns: 240px 1fr; align-items: start; }
+.tud-ix { position: sticky; top: calc(88px + env(safe-area-inset-top, 0px)); }
+.tud-ix ol { list-style: none; margin: 0; padding: 0; counter-reset: ix; border-top: 1px solid var(--line); }
+.tud-ix li { counter-increment: ix; border-bottom: 1px solid var(--line); }
+.tud-ix a {
+  display: block; padding: 11px 0; text-decoration: none;
+  font-family: var(--f-d); font-size: 12.5px; font-weight: 500;
+  letter-spacing: .06em; color: var(--ink-2);
+}
+.tud-ix a::before { content: counter(ix, decimal-leading-zero); margin-right: 12px; color: var(--ink-3); }
+.tud-ix a:hover { color: var(--ink); }
+
+.tud-b > article + article { margin-top: clamp(40px, 5vw, 64px); padding-top: clamp(32px, 4vw, 48px); border-top: 1px solid var(--line); }
+.tud-b h3 { font-size: clamp(24px, 3vw, 32px); margin-bottom: 22px; scroll-margin-top: 96px; }
+.tud-b h4 {
+  font-family: var(--f-d); font-size: 12px; font-weight: 600;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--ink);
+  margin: 28px 0 10px;
+}
+.tud-b article > h4:first-of-type { margin-top: 0; }
+.tud-b p, .tud-b li { font-size: 17px; color: var(--ink-2); }
+.tud-b .lead { font-size: 19px; color: var(--ink); }
+.tud-b ul { margin: 0 0 1em; padding-left: 20px; }
+.tud-b li { margin-bottom: 7px; }
+.tud-b article { scroll-margin-top: 96px; }
+
+/* ---------- reviews ---------- */
+
+.rev {
+  background: var(--paper); border: 1px solid var(--line);
+  padding: clamp(26px, 3.5vw, 44px);
+  display: grid; gap: clamp(22px, 3vw, 40px);
+  grid-template-columns: 1fr auto; align-items: center;
+}
+.rev-st { font-size: 15px; letter-spacing: .3em; color: var(--ink); margin-bottom: 12px; }
+.rev-h { font-family: var(--f-d); font-size: 19px; font-weight: 600; margin-bottom: 10px; }
+.rev-x { color: var(--ink-2); font-size: 16.5px; max-width: 52ch; margin: 0; }
+.rev-b { margin: 0; }
+
+/* Quotes, once his own reviews are in. */
+.revs { display: grid; gap: 1px; grid-template-columns: repeat(3, 1fr); margin-top: 1px; background: var(--line); }
+.rev-q { margin: 0; background: var(--paper); padding: clamp(22px, 2.6vw, 30px); border: 1px solid var(--line); }
+.rev-q p { font-size: 17px; color: var(--ink-2); }
+.rev-q cite {
+  display: block; margin-top: 14px; font-style: normal;
+  font-family: var(--f-d); font-size: 11px; font-weight: 600;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3);
+}
+
+/* ---------- form ---------- */
+
+.form-sec { background: var(--ink); color: var(--on-ink); padding-block: clamp(64px, 9vw, 104px); }
+.form-in { display: grid; gap: clamp(32px, 5vw, 64px); grid-template-columns: .9fr 1.1fr; align-items: start; }
+.form-l h2 { font-size: clamp(28px, 4vw, 42px); }
+.form-lede { margin: 22px 0 0; color: var(--on-ink); font-size: 19px; font-weight: 300; max-width: 34ch; }
+.form-note-l { margin: 22px 0 0; color: var(--on-ink-2); font-size: 15.5px; max-width: 40ch; }
+
+.form { display: grid; gap: 18px; }
+.fld { display: grid; gap: 7px; }
+.fld label { font-family: var(--f-d); font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--on-ink); }
+.req { color: var(--on-ink-2); font-weight: 500; }
+.opt { color: var(--on-ink-2); font-weight: 400; text-transform: none; letter-spacing: .02em; }
+.row { display: grid; gap: 18px; grid-template-columns: 1fr 1fr; }
+
+.form input[type="text"], .form textarea {
+  width: 100%; font: inherit; font-size: 16px; color: var(--on-ink);
+  background: #1D1D1D; border: 1px solid var(--line-w); padding: 12px 14px;
+}
+.form textarea { resize: vertical; min-height: 104px; }
+.form input::placeholder, .form textarea::placeholder { color: #6E6B65; }
+.form input[type="text"]:focus, .form textarea:focus { border-color: var(--on-ink); }
+.form input[type="file"] { font: inherit; font-size: 14px; color: var(--on-ink-2); }
+.form input[type="file"]::file-selector-button {
+  font-family: var(--f-d); font-size: 11px; font-weight: 600; letter-spacing: .14em;
+  text-transform: uppercase; padding: 9px 14px; margin-right: 12px; cursor: pointer;
+  background: transparent; border: 1px solid var(--line-w); color: var(--on-ink);
+}
+
+/* The two checkboxes are one decision, so they sit in one block. */
+.chk-group { display: grid; border: 1px solid var(--line-w); }
+.fld-chk { grid-template-columns: auto 1fr; align-items: start; gap: 12px; padding: 16px 18px; }
+.fld-chk + .fld-chk { border-top: 1px solid var(--line-w); }
+.fld-chk input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--on-ink); }
+.fld-chk label { text-transform: none; letter-spacing: .02em; font-size: 14px; font-weight: 500; line-height: 1.5; cursor: pointer; }
+
+.chk-note {
+  margin: 0; padding: 13px 16px; font-size: 15px; line-height: 1.55;
+  background: #1D1D1D; border: 1px solid var(--line-w); color: var(--on-ink-2);
+}
+
+/* Ticking "korrekció" switches off what a correction cannot answer: the
+   tattoo already exists, so its place and size are on the photograph. */
+.fld.off label, .fld.off .hint, .fld.off .req, .fld.off .opt { color: #5E5C57; }
+.fld.off label { cursor: default; }
+.form input:disabled, .form textarea:disabled {
+  background: #181818; border-color: rgba(255, 255, 255, .07);
+  color: #5E5C57; cursor: not-allowed;
+}
+.form input:disabled::placeholder { color: #4A4844; }
+.fld-chk input:disabled { cursor: not-allowed; }
+
+.hint { margin: 0; font-size: 14px; color: var(--on-ink-2); }
+.err { display: none; margin: 0; font-size: 14px; color: #E5907F; }
+.fld.bad .err { display: block; }
+.fld.bad input[type="text"], .fld.bad textarea { border-color: #E5907F; }
+.form-ok { margin: 0; padding: 14px 16px; font-size: 16px; background: #1D1D1D; border: 1px solid var(--line-w); color: var(--on-ink); }
+.form-note { margin: 0; font-size: 14px; color: var(--on-ink-2); }
+
+/* ---------- footer ---------- */
+
+.ftr { background: var(--ink); color: var(--on-ink); border-top: 1px solid var(--line-w); padding-block: 48px; }
+.ftr-in { display: flex; flex-wrap: wrap; gap: 28px 44px; align-items: center; }
+.ftr-mark { width: 150px; }
+.ftr-nav { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-inline: auto; }
+.ftr-nav a { font-family: var(--f-d); font-size: 11.5px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--on-ink-2); text-decoration: none; }
+.ftr-nav a:hover { color: var(--on-ink); }
+.ftr-m { margin: 0; font-size: 15px; color: var(--on-ink-2); line-height: 1.7; }
+
+.ftr-b {
+  display: flex; flex-wrap: wrap; gap: 10px 32px; align-items: baseline;
+  margin-top: 36px; padding-top: 22px; border-top: 1px solid var(--line-w);
+}
+.ftr-b p { margin: 0; font-family: var(--f-d); font-size: 11.5px; font-weight: 500;
+           letter-spacing: .14em; text-transform: uppercase; color: var(--on-ink-2); }
+.ftr-by { margin-left: auto !important; }
+.ftr-b a { color: var(--on-ink); text-decoration: none; border-bottom: 1px solid var(--line-w); }
+.ftr-b a:hover { border-bottom-color: var(--on-ink); }
+
+/* ---------- legal page ---------- */
+
+.nav-legal a { border-bottom: 1px solid transparent; }
+.legal { max-width: 760px; }
+.legal-h { margin-bottom: clamp(32px, 4vw, 48px); }
+.legal-h h1 { font-size: clamp(28px, 4.2vw, 42px); }
+.legal-h .sec-l { max-width: 60ch; }
+.legal-d {
+  margin: 22px 0 0; font-family: var(--f-d); font-size: 11px; font-weight: 500;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3);
+}
+/* Marked as unfinished on purpose — it comes out when the official company
+   details arrive, and until then nobody should mistake this for complete. */
+.todo {
+  margin-bottom: clamp(32px, 4vw, 44px); padding: 20px 24px;
+  background: var(--paper); border: 1px solid var(--ink);
+}
+.todo-h { font-family: var(--f-d); font-size: 11px; font-weight: 600;
+          letter-spacing: .2em; text-transform: uppercase; margin-bottom: 8px; }
+.todo p:last-child { font-size: 16px; color: var(--ink-2); }
+.legal .tud-b > article + article { margin-top: clamp(34px, 4vw, 52px); padding-top: clamp(28px, 3.5vw, 40px); }
+.legal .tud-b strong { color: var(--ink); font-weight: 600; }
+
+/* ---------- breakpoints ---------- */
+
+@media (max-width: 1000px) {
+  .hero-in { grid-template-columns: 1fr; }
+  /* Stacked, the photo stays a portrait — a standing figure does not survive
+     a letterbox crop. */
+  .hero-p { max-width: 340px; }
+  .two { grid-template-columns: 1fr; }
+  .rev { grid-template-columns: 1fr; justify-items: start; }
+  .revs { grid-template-columns: 1fr; }
+  .form-in { grid-template-columns: 1fr; }
+  .flow { grid-template-columns: repeat(2, 1fr); }
+  .fl { padding-right: 24px; }
+  .fl:nth-child(2n) { border-right: 0; padding-right: 0; }
+  .fl:nth-child(odd) { padding-left: 0; }
+  .fl:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .tud { grid-template-columns: 1fr; }
+  .tud-ix { position: static; }
+  .tud-ix ol { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 24px; }
+}
+
+@media (max-width: 860px) {
+  .burger { display: block; }
+  .nav {
+    position: absolute; left: 0; right: 0; top: 100%;
+    flex-direction: column; align-items: stretch; gap: 0;
+    background: var(--bone); border-bottom: 1px solid var(--line);
+    padding: 4px var(--gut) 20px; display: none;
+  }
+  .nav.open { display: flex; }
+  .nav a { padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .nav a.nav-cta { margin-top: 16px; text-align: center; border-bottom: 0; }
+  .hdr-in { position: relative; }
+
+  .gal { grid-template-columns: repeat(2, 1fr); }
+  .g-hero img { height: 100%; }
+  .cards { grid-template-columns: 1fr; }
+  .card-no { border-left: 0; border-top: 3px solid var(--ink); }
+}
+
+@media (max-width: 620px) {
+  body { font-size: 17px; }
+  .hero-lede { max-width: none; }
+  .cta-row .btn { flex: 1 1 auto; text-align: center; }
+  .flow { grid-template-columns: 1fr; }
+  .fl { border-right: 0; padding: 24px 0 26px; border-top: 1px solid var(--line); }
+  .fl:first-child { border-top: 0; }
+  .fl + .fl { padding-left: 0; }
+  .fl:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .inkness { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .row { grid-template-columns: 1fr; }
+  .tud-ix ol { grid-template-columns: 1fr; }
+  .gal { grid-template-columns: 1fr; }
+  .g-hero, .g-note { grid-column: auto; grid-row: auto; }
+  .g-hero img { aspect-ratio: 1 / 1; height: auto; }
+  .ftr-in { flex-direction: column; align-items: flex-start; }
+  .ftr-nav { margin-inline: 0; }
+  .ftr-by { margin-left: 0 !important; }
+}
