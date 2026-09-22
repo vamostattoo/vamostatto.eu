@@ -2,8 +2,12 @@
    The form is the whole point of the page, so the validation is written
    around what Norbert actually needs in order to quote: a way to reach the
    person, what they want, where on the body, and the size in centimetres.
-   Ticking "korrekció" changes what the form asks for — a correction needs a
-   sharp photo of the healed tattoo, not an idea. */
+
+   Two checkboxes change what the form asks for. "Korrekció" means the tattoo
+   already exists, so the form stops asking where it is and how big it is —
+   that is on the photograph — and asks for the photograph instead. "Első
+   tetoválás" changes nothing in the validation; it is a flag for Norbert, so
+   he knows to explain more when he answers. */
 
 const burger = document.querySelector('.burger');
 const nav = document.querySelector('.nav');
@@ -23,11 +27,17 @@ document.addEventListener('keydown', e => {
 const form = document.querySelector('#f');
 const ok = document.querySelector('#ok');
 const korr = document.querySelector('#f-korr');
+const elso = document.querySelector('#f-elso');
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 const hintKep = document.querySelector('#hint-kep');
 const optKep = document.querySelector('#opt-kep');
 const lblOtlet = document.querySelector('label[for="f-otlet"]');
+const noteKorr = document.querySelector('#note-korr');
+const noteElso = document.querySelector('#note-elso');
+
+/* What a correction cannot answer. */
+const offOnKorr = [document.querySelector('#f-hol'), document.querySelector('#f-meret')];
 
 function fail(input, msg) {
   input.closest('.fld').classList.add('bad');
@@ -38,10 +48,27 @@ function clear(input) {
   input.closest('.fld').classList.remove('bad');
 }
 
-/* A correction request and a new tattoo need different things, so the form
-   says so rather than asking for everything and sorting it out later. */
+/* Disabled rather than hidden: the person can see what the tick did, and a
+   disabled field is not submitted, so a stale value cannot travel with a
+   correction request. The typed text stays, in case they untick again. */
+function setOff(input, off) {
+  input.disabled = off;
+  input.closest('.fld').classList.toggle('off', off);
+  if (off) clear(input);
+}
+
 function applyMode() {
   const c = korr.checked;
+
+  offOnKorr.forEach(i => setOff(i, c));
+
+  /* A correction is by definition not somebody's first tattoo. */
+  if (c) elso.checked = false;
+  setOff(elso, c);
+
+  noteKorr.hidden = !c;
+  noteElso.hidden = !elso.checked;
+
   optKep.textContent = c ? '(kötelező)' : '(nem kötelező)';
   hintKep.textContent = c
     ? 'Egy éles fotó a gyógyult tetoválásról, arról a részről, ami javítást igényelhet.'
@@ -51,7 +78,8 @@ function applyMode() {
     ? 'Írd le, melyik résszel nem vagy elégedett, és mikor készült a tetoválás.'
     : 'Mit szeretnél, és mit jelent neked? Ha van hozzá történet, írd meg.';
 }
-korr.addEventListener('change', () => { applyMode(); [form.meret, form.kepek].forEach(clear); });
+korr.addEventListener('change', () => { applyMode(); clear(form.kepek); });
+elso.addEventListener('change', applyMode);
 applyMode();
 
 form.addEventListener('submit', e => {
@@ -73,9 +101,9 @@ form.addEventListener('submit', e => {
     bad ||= otlet;
   }
 
-  if (!hol.value.trim()) { fail(hol, 'Írd meg, a test melyik részére szeretnéd.'); bad ||= hol; }
-
   if (!korr.checked) {
+    if (!hol.value.trim()) { fail(hol, 'Írd meg, a test melyik részére szeretnéd.'); bad ||= hol; }
+
     /* Size drives the quote and the length of the session, so it is required
        and has to contain a number — "kicsi" is not a size. */
     const m = meret.value.trim();
