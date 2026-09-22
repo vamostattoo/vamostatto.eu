@@ -491,99 +491,144 @@
   </section>
 
   <section id="jelentkezes" class="form-sec">
-    <div class="wrap form-in">
-      <div class="form-l">
-        <p class="eyebrow eyebrow-w">Időpontfoglalás</p>
-        <h2 class="h-w">Mesélj az elképzelésedről</h2>
-        <p class="form-lede">
-          Ha közel áll hozzád ez a szemlélet, az űrlapon keresztül mesélj az
-          elképzelésedről. Örömmel segítek formát adni neki.
-        </p>
-        <p class="form-note-l">
-          Az űrlap elküldése még nem jelent végleges időpontfoglalást — ezt
-          követően egyeztetjük a részleteket. A feldolgozás akár 2–3 napot is
-          igénybe vehet.
-        </p>
+  <div class="wrap form-in">
+    <div class="form-l">
+      <p class="eyebrow eyebrow-w">Időpontfoglalás</p>
+      <h2 class="h-w">Mesélj az elképzelésedről</h2>
+      <p class="form-lede">
+        Ha közel áll hozzád ez a szemlélet, az űrlapon keresztül mesélj az
+        elképzelésedről. Örömmel segítek formát adni neki.
+      </p>
+      <p class="form-note-l">
+        Az űrlap elküldése még nem jelent végleges időpontfoglalást — ezt
+        követően egyeztetjük a részleteket. A feldolgozás akár 2–3 napot is
+        igénybe vehet.
+      </p>
+    </div>
+
+    <form class="form" id="f" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data" novalidate>
+      
+      <!-- Web3Forms kötelező rejtett mezők -->
+      <input type="hidden" name="access_key" value="472f1438-4cde-4648-a5d2-d73485982926">
+      <input type="hidden" name="subject" value="Új tetoválás megkeresés">
+      <input type="checkbox" name="botcheck" style="display: none;"> <!-- Spam védelem -->
+
+      <div class="fld">
+        <label for="f-nev">Neved</label>
+        <input id="f-nev" name="nev" type="text" autocomplete="name" required>
+        <p class="err" data-for="f-nev"></p>
+      </div>
+      <div class="fld">
+        <label for="f-el">E-mail-cím vagy telefonszám</label>
+        <input id="f-el" name="elerhetoseg" type="text" autocomplete="email" required>
+        <p class="err" data-for="f-el"></p>
       </div>
 
-      <form class="form" id="f" novalidate>
+      <div class="chk-group">
+        <div class="fld fld-chk">
+          <input id="f-korr" name="korrekcio" type="checkbox" value="Igen">
+          <label for="f-korr">Korrekciót szeretnék jelezni egy nálam készült tetoválásra</label>
+        </div>
+        <div class="fld fld-chk">
+          <input id="f-elso" name="elso" type="checkbox" value="Igen">
+          <label for="f-elso">Ez lesz az első tetoválásom</label>
+        </div>
+      </div>
+      <p class="chk-note" id="note-korr" hidden>
+        Korrekciónál a fotó, a leírás és a lehetséges időpontok elegendők —
+        a testrészt és a méretet a meglévő tetoválásból látom, ezért azokat a
+        mezőket kikapcsoltam.
+      </p>
+      <p class="chk-note" id="note-elso" hidden>
+        Köszönöm, hogy jelezted. Az első alkalom előtt mindent részletesen
+        átbeszélünk, és nyugodtan kérdezz bármit — semmi sem túl apró.
+      </p>
+
+      <div class="fld" id="fld-otlet">
+        <label for="f-otlet">Mi az elképzelésed?</label>
+        <textarea id="f-otlet" name="otlet" rows="4"
+          placeholder="Mit szeretnél, és mit jelent neked? Ha van hozzá történet, írd meg."></textarea>
+        <p class="err" data-for="f-otlet"></p>
+      </div>
+
+      <div class="row">
         <div class="fld">
-          <label for="f-nev">Neved</label>
-          <input id="f-nev" name="nev" type="text" autocomplete="name">
-          <p class="err" data-for="f-nev"></p>
+          <label for="f-hol">Hova szeretnéd?</label>
+          <input id="f-hol" name="testresz" type="text" placeholder="Például: bal alkar, belső oldal">
+          <p class="err" data-for="f-hol"></p>
         </div>
         <div class="fld">
-          <label for="f-el">E-mail-cím vagy telefonszám</label>
-          <input id="f-el" name="elerhetoseg" type="text" autocomplete="email">
-          <p class="err" data-for="f-el"></p>
+          <label for="f-meret">Kb. mekkora? <span class="req">cm-ben</span></label>
+          <input id="f-meret" name="meret" type="text" inputmode="numeric" placeholder="Például: 10 cm">
+          <p class="err" data-for="f-meret"></p>
         </div>
+      </div>
 
-        <div class="chk-group">
-          <div class="fld fld-chk">
-            <input id="f-korr" name="korrekcio" type="checkbox">
-            <label for="f-korr">Korrekciót szeretnék jelezni egy nálam készült tetoválásra</label>
-          </div>
-          <div class="fld fld-chk">
-            <input id="f-elso" name="elso" type="checkbox">
-            <label for="f-elso">Ez lesz az első tetoválásom</label>
-          </div>
-        </div>
-        <p class="chk-note" id="note-korr" hidden>
-          Korrekciónál a fotó, a leírás és a lehetséges időpontok elegendők —
-          a testrészt és a méretet a meglévő tetoválásból látom, ezért azokat a
-          mezőket kikapcsoltam.
-        </p>
-        <p class="chk-note" id="note-elso" hidden>
-          Köszönöm, hogy jelezted. Az első alkalom előtt mindent részletesen
-          átbeszélünk, és nyugodtan kérdezz bármit — semmi sem túl apró.
-        </p>
+      <div class="fld">
+        <label for="f-mikor">Mikorra szeretnéd? <span class="opt">(nem kötelező)</span></label>
+        <input id="f-mikor" name="mikor" type="text" placeholder="Például: októberben, hétköznap délután">
+      </div>
 
-        <div class="fld" id="fld-otlet">
-          <label for="f-otlet">Mi az elképzelésed?</label>
-          <textarea id="f-otlet" name="otlet" rows="4"
-            placeholder="Mit szeretnél, és mit jelent neked? Ha van hozzá történet, írd meg."></textarea>
-          <p class="err" data-for="f-otlet"></p>
-        </div>
+      <div class="fld">
+        <label for="f-kep" id="lbl-kep">Képek csatolása <span class="opt" id="opt-kep">(nem kötelező)</span></label>
+        <input id="f-kep" name="kepek" type="file" accept="image/*" multiple>
+        <p class="hint" id="hint-kep">Inspirációs képek, vagy takarás esetén a meglévő tetoválás.</p>
+        <p class="err" data-for="f-kep"></p>
+      </div>
 
-        <div class="row">
-          <div class="fld">
-            <label for="f-hol">Hova szeretnéd?</label>
-            <input id="f-hol" name="testresz" type="text" placeholder="Például: bal alkar, belső oldal">
-            <p class="err" data-for="f-hol"></p>
-          </div>
-          <div class="fld">
-            <label for="f-meret">Kb. mekkora? <span class="req">cm-ben</span></label>
-            <input id="f-meret" name="meret" type="text" inputmode="numeric" placeholder="Például: 10 cm">
-            <p class="err" data-for="f-meret"></p>
-          </div>
-        </div>
+      <button class="btn btn-l btn-w btn-full" type="submit">Elküldöm</button>
+      
+      <p class="form-ok" id="ok" hidden>
+        Köszönöm, megkaptam! Az üzenetek feldolgozása 2–3 napot is igénybe
+        vehet, utána jelentkezem a megadott elérhetőségen.
+      </p>
+      <p class="form-note">
+        Az adataidat kizárólag az időpont egyeztetésére használom, és nem
+        adom tovább senkinek. 18 éven aluliaktól nem tudok jelentkezést
+        fogadni.
+      </p>
+    </form>
+  </div>
+</section>
 
-        <div class="fld">
-          <label for="f-mikor">Mikorra szeretnéd? <span class="opt">(nem kötelező)</span></label>
-          <input id="f-mikor" name="mikor" type="text" placeholder="Például: októberben, hétköznap délután">
-        </div>
+<!-- Web3Forms AJAX küldő script -->
+<script>
+document.getElementById('f').addEventListener('submit', function(e) {
+  e.preventDefault(); // Megakadályozza az alapértelmezett oldalfrissítést
+  
+  const form = e.target;
+  const formData = new FormData(form);
+  const submitButton = form.querySelector('button[type="submit"]');
+  
+  // Gomb szövegének megváltoztatása és letiltása küldés közben
+  submitButton.textContent = 'Küldés folyamatban...';
+  submitButton.disabled = true;
 
-        <div class="fld">
-          <label for="f-kep" id="lbl-kep">Képek csatolása <span class="opt" id="opt-kep">(nem kötelező)</span></label>
-          <input id="f-kep" name="kepek" type="file" accept="image/*" multiple>
-          <p class="hint" id="hint-kep">Inspirációs képek, vagy takarás esetén a meglévő tetoválás.</p>
-          <p class="err" data-for="f-kep"></p>
-        </div>
-
-        <button class="btn btn-l btn-w btn-full" type="submit">Elküldöm</button>
-        <p class="form-ok" id="ok" hidden>
-          Köszönöm, megkaptam! Az üzenetek feldolgozása 2–3 napot is igénybe
-          vehet, utána jelentkezem a megadott elérhetőségen.
-        </p>
-        <p class="form-note">
-          Az adataidat kizárólag az időpont egyeztetésére használom, és nem
-          adom tovább senkinek. 18 éven aluliaktól nem tudok jelentkezést
-          fogadni.
-        </p>
-      </form>
-    </div>
-  </section>
-
+  fetch(form.action, {
+      method: form.method,
+      body: formData
+  })
+  .then(async response => {
+      if (response.ok) {
+          // Ha sikeres, megjelenítjük a sikeres üzenetet és ürítjük a formot
+          document.getElementById('ok').removeAttribute('hidden');
+          form.reset();
+      } else {
+          const json = await response.json();
+          alert('Hiba történt: ' + json.message);
+      }
+  })
+  .catch(error => {
+      console.error('Error:', error);
+      alert('Hálózati hiba történt a küldés során.');
+  })
+  .finally(() => {
+      // Gomb visszaállítása eredeti állapotba
+      submitButton.textContent = 'Elküldöm';
+      submitButton.disabled = false;
+  });
+});
+</script>
 </main>
 
 <footer class="ftr">
