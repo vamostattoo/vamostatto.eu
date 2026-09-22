@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nincs ilyen oldal — Vamos Tattoo</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="styles.css">
+<style>
+  body { background: var(--ink); color: var(--on-ink); min-height: 100svh; display: grid; place-items: center; }
+  .e { text-align: center; max-width: 46ch; }
+  .e img { width: min(72vw, 300px); margin: 0 auto 34px; }
+  .e h1 { font-size: clamp(28px, 5vw, 42px); color: var(--on-ink); }
+  .e p { margin: 20px 0 0; color: var(--on-ink-2); font-size: 18px; }
+  .e .cta-row { justify-content: center; }
+  .e-by {
+    position: absolute; bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+    left: 0; right: 0; text-align: center; margin: 0;
+    font-family: var(--f-d); font-size: 11px; font-weight: 500;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--on-ink-2);
+  }
+  .e-by a { color: var(--on-ink); }
+</style>
+</head>
+<body>
+  <main class="wrap e">
+    <img src="assets/brand/vamos-wordmark-white.png" alt="Vamos Tattoo" width="300" height="60">
+    <h1>Ez az oldal nincs meg.</h1>
+    <p>
+      Vagy elírtad a címet, vagy én rendeztem át azóta. Mindkettő előfordul —
+      a lényeg egy kattintásra van.
+    </p>
+    <p class="cta-row">
+      <a class="btn btn-l btn-w" href="/">Vissza a főoldalra</a>
+      <a class="btn btn-l btn-o" href="/#jelentkezes">Időpontot kérek</a>
+    </p>
+  </main>
+  <p class="e-by">
+    Fejlesztette:
+    <a href="https://axiomaweb.hu" target="_blank" rel="noopener">Axióma Webfejlesztés</a>
+  </p>
+</body>
+</html>
