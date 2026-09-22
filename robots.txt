@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: vamostatto.eu/sitemap.xml
