@@ -30,6 +30,13 @@ const korr = document.querySelector('#f-korr');
 const elso = document.querySelector('#f-elso');
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
+/* Phone is off by default and only appears behind a tick, so the form asks
+   for one thing to reach the person by. It is disabled while hidden, so an
+   empty value never travels with the submission. */
+const telKell = document.querySelector('#f-tel-kell');
+const fldTel = document.querySelector('#fld-tel');
+const tel = document.querySelector('#f-tel');
+
 const hintKep = document.querySelector('#hint-kep');
 const optKep = document.querySelector('#opt-kep');
 const lblOtlet = document.querySelector('label[for="f-otlet"]');
@@ -78,23 +85,38 @@ function applyMode() {
     ? 'Írd le, melyik résszel nem vagy elégedett, és mikor készült a tetoválás.'
     : 'Mit szeretnél, és mit jelent neked? Ha van hozzá történet, írd meg.';
 }
+function applyTel() {
+  const on = telKell.checked;
+  fldTel.hidden = !on;
+  tel.disabled = !on;
+  if (!on) { tel.value = ''; clear(tel); }
+}
+telKell.addEventListener('change', applyTel);
+applyTel();
+
 korr.addEventListener('change', () => { applyMode(); clear(form.kepek); });
 elso.addEventListener('change', applyMode);
 applyMode();
 
 form.addEventListener('submit', e => {
   e.preventDefault();
-  const { nev, elerhetoseg: el, otlet, testresz: hol, meret, kepek } = form;
-  [nev, el, otlet, hol, meret, kepek].forEach(clear);
+  const { nev, email, otlet, testresz: hol, meret, kepek } = form;
+  [nev, email, tel, otlet, hol, meret, kepek].forEach(clear);
   ok.hidden = true;
   let bad = null;
 
   if (!nev.value.trim()) { fail(nev, 'Írd be a neved, hogy tudjam, kihez szóljak.'); bad ||= nev; }
 
-  const v = el.value.trim();
-  const digits = (v.match(/\d/g) || []).length;
-  if (!v) { fail(el, 'Elérhetőség nélkül nem tudok visszajelezni.'); bad ||= el; }
-  else if (!EMAIL.test(v) && digits < 7) { fail(el, 'Ez így nem tűnik e-mail-címnek vagy telefonszámnak.'); bad ||= el; }
+  const ev = email.value.trim();
+  if (!ev) { fail(email, 'E-mail-cím nélkül nem tudok visszajelezni.'); bad ||= email; }
+  else if (!EMAIL.test(ev)) { fail(email, 'Ez így nem tűnik e-mail-címnek.'); bad ||= email; }
+
+  if (telKell.checked) {
+    const tv = tel.value.trim();
+    const digits = (tv.match(/\d/g) || []).length;
+    if (!tv) { fail(tel, 'Írd be a számot, vagy vedd ki a pipát.'); bad ||= tel; }
+    else if (digits < 7) { fail(tel, 'Ez így nem tűnik telefonszámnak.'); bad ||= tel; }
+  }
 
   if (!otlet.value.trim()) {
     fail(otlet, korr.checked ? 'Írd le, melyik részt javítanád.' : 'Írd le pár mondatban, mit szeretnél.');
@@ -120,10 +142,11 @@ form.addEventListener('submit', e => {
 
   form.reset();
   applyMode();
+  applyTel();
   ok.hidden = false;
 });
 
-[...form.querySelectorAll('input[type="text"], textarea')].forEach(f =>
+[...form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea')].forEach(f =>
   f.addEventListener('input', () => clear(f))
 );
 form.kepek.addEventListener('change', () => clear(form.kepek));
