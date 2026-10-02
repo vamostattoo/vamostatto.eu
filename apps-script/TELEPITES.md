@@ -40,54 +40,17 @@ A `Code.gs` egy Google Apps Script, ami Norbert saját fiókjában fut, **ingyen
 > A „Bárki" hozzáférés azt jelenti, hogy az űrlap el tudja érni. A táblázatot
 > és a Drive mappát **nem** teszi nyilvánossá, azok Norberté maradnak.
 
-## Amit Vincének kell csinálnia
+## Amit a weboldalon kell tenni
 
-A `prod.html` alján lévő Web3Forms küldő szkriptet le kell cserélni. A lényeg,
-hogy a képeket base64-ben, JSON-ként kell küldeni, `text/plain` fejléccel —
-így az Apps Script fogadja, és nem akad el CORS preflighton.
+Semmi kódolás: a `script.js` legtetején van egy sor, és abba kell bemásolni a
+4. lépésben kapott címet.
 
 ```js
-const ENDPOINT = 'IDE_JON_AZ_APPS_SCRIPT_URL';
-
-async function fileToBase64(file) {
-  const buf = await file.arrayBuffer();
-  let bin = '';
-  const bytes = new Uint8Array(buf);
-  for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
-  return { name: file.name, type: file.type, data: btoa(bin) };
-}
-
-async function sendForm(form) {
-  const kepek = [];
-  for (const f of form.kepek.files) {
-    if (f.size > 8 * 1024 * 1024) throw new Error(f.name + ' nagyobb 8 MB-nál.');
-    kepek.push(await fileToBase64(f));
-  }
-  const body = {
-    nev: form.nev.value.trim(),
-    email: form.email.value.trim(),
-    telefon: form.telefon && !form.telefon.disabled ? form.telefon.value.trim() : '',
-    otlet: form.otlet.value.trim(),
-    testresz: form.testresz.disabled ? '' : form.testresz.value.trim(),
-    meret: form.meret.disabled ? '' : form.meret.value.trim(),
-    mikor: form.mikor.value.trim(),
-    korrekcio: form.korrekcio.checked,
-    elso: form.elso.checked,
-    botcheck: form.botcheck.checked,
-    kepek
-  };
-  const r = await fetch(ENDPOINT, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify(body)
-  });
-  const j = await r.json();
-  if (!j.ok) throw new Error(j.error || 'Ismeretlen hiba.');
-}
+const ENDPOINT = '';
 ```
 
-A Web3Forms rejtett mezői (`access_key`, `subject`) ezután törölhetők a
-`prod.html`-ből; a `botcheck` maradjon, azt a szkript is figyeli.
+Ennyi. A küldés, a képek base64-re alakítása, a hibakezelés és a sikerüzenet
+már bent van a fájlban.
 
 ## Amit a táblázat tudni fog
 

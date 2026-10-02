@@ -9,6 +9,16 @@
    tetoválás" changes nothing in the validation; it is a flag for Norbert, so
    he knows to explain more when he answers. */
 
+/* ===================================================================
+   IDE MÁSOLD BE a Google Apps Script webalkalmazás címét, amit
+   Norberttől kapsz. Így néz ki:
+   https://script.google.com/macros/s/AKfycb.../exec
+   Amíg üresen marad, az űrlap nem küld, hanem e-mailre irányít.
+   =================================================================== */
+const ENDPOINT = '';
+
+const MAX_FILE = 8 * 1024 * 1024;   /* fájlonként 8 MB */
+
 const burger = document.querySelector('.burger');
 const nav = document.querySelector('.nav');
 
@@ -36,6 +46,31 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const telKell = document.querySelector('#f-tel-kell');
 const fldTel = document.querySelector('#fld-tel');
 const tel = document.querySelector('#f-tel');
+
+const failBox = document.querySelector('#fail');
+const submitBtn = document.querySelector('#f button[type="submit"]');
+
+function showFail(msg) {
+  failBox.textContent = msg;
+  failBox.hidden = false;
+}
+
+/* A képeket base64-ben küldjük, mert az Apps Script nem fogad multipartot. */
+function toBase64(file) {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => {
+      const s = String(r.result);
+      resolve({
+        name: file.name,
+        type: file.type || 'application/octet-stream',
+        data: s.slice(s.indexOf(',') + 1)
+      });
+    };
+    r.onerror = () => reject(new Error(file.name + ' beolvasása nem sikerült.'));
+    r.readAsDataURL(file);
+  });
+}
 
 const hintKep = document.querySelector('#hint-kep');
 const optKep = document.querySelector('#opt-kep');
@@ -98,8 +133,9 @@ korr.addEventListener('change', () => { applyMode(); clear(form.kepek); });
 elso.addEventListener('change', applyMode);
 applyMode();
 
-form.addEventListener('submit', e => {
+form.addEventListener('submit', async e => {
   e.preventDefault();
+  failBox.hidden = true;
   const { nev, email, otlet, testresz: hol, meret, kepek } = form;
   [nev, email, tel, otlet, hol, meret, kepek].forEach(clear);
   ok.hidden = true;
@@ -140,10 +176,64 @@ form.addEventListener('submit', e => {
 
   if (bad) { bad.focus(); return; }
 
-  form.reset();
-  applyMode();
-  applyTel();
-  ok.hidden = false;
+  /* Amíg nincs bekötve a háttér, ne nyeljük el némán a jelentkezést. */
+  if (!ENDPOINT) {
+    showFail('Az űrlap küldése még nincs bekötve. Kérlek írj e-mailt: tattoo.vamos@gmail.com');
+    return;
+  }
+
+  const label = submitBtn.textContent;
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Küldés…';
+
+  try {
+    const files = [];
+    for (const f of kepek.files) {
+      if (f.size > MAX_FILE) throw new Error(f.name + ' nagyobb 8 MB-nál, kérlek küldj kisebbet.');
+      files.push(await toBase64(f));
+    }
+
+    /* text/plain, hogy a böngésző ne küldjön CORS preflightot — az Apps
+       Script webalkalmazás nem válaszol OPTIONS kérésre. */
+    const res = await fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        nev: nev.value.trim(),
+        email: email.value.trim(),
+        telefon: tel.disabled ? '' : tel.value.trim(),
+        otlet: otlet.value.trim(),
+        testresz: hol.disabled ? '' : hol.value.trim(),
+        meret: meret.disabled ? '' : meret.value.trim(),
+        mikor: form.mikor.value.trim(),
+        korrekcio: korr.checked,
+        elso: elso.checked,
+        botcheck: form.botcheck.checked,
+        kepek: files
+      })
+    });
+
+    const data = await res.json();
+    if (!data.ok) throw new Error(data.error || 'A küldés nem sikerült.');
+
+    form.reset();
+    applyMode();
+    applyTel();
+    ok.hidden = false;
+    ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  } catch (err) {
+    /* A saját hibáink magyarul szólnak (túl nagy fájl, szerver válasza). A fetch
+       viszont "Failed to fetch"-et dob, azt nem a látogató elé valóra cseréljük. */
+    const msg = (err && err.message) || '';
+    const halozati = err instanceof TypeError || /fetch|network/i.test(msg);
+    showFail(halozati
+      ? 'Nem sikerült elküldeni. Ellenőrizd az internetkapcsolatot, vagy írj e-mailt: tattoo.vamos@gmail.com'
+      : msg || 'A küldés nem sikerült. Kérlek próbáld újra.');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = label;
+  }
 });
 
 [...form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea')].forEach(f =>
