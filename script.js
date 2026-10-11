@@ -1,21 +1,6 @@
-/* Vamos Tattoo — menu and booking form.
-   The form is the whole point of the page, so the validation is written
-   around what Norbert actually needs in order to quote: a way to reach the
-   person, what they want, where on the body, and the size in centimetres.
 
-   Two checkboxes change what the form asks for. "Korrekció" means the tattoo
-   already exists, so the form stops asking where it is and how big it is —
-   that is on the photograph — and asks for the photograph instead. "Első
-   tetoválás" changes nothing in the validation; it is a flag for Norbert, so
-   he knows to explain more when he answers. */
 
-/* ===================================================================
-   IDE MÁSOLD BE a Google Apps Script webalkalmazás címét, amit
-   Norberttől kapsz. Így néz ki:
-   https://script.google.com/macros/s/AKfycb.../exec
-   Amíg üresen marad, az űrlap nem küld, hanem e-mailre irányít.
-   =================================================================== */
-const ENDPOINT = '';
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbywShiAJv3IDtTN-_C4XoG1oP3r9z4uS_wAemWD5MSZLEQ_08ekSGWje0XiNr_M5qy83g/exec';
 
 const MAX_FILE = 8 * 1024 * 1024;   /* fájlonként 8 MB */
 
@@ -40,9 +25,7 @@ const korr = document.querySelector('#f-korr');
 const elso = document.querySelector('#f-elso');
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-/* Phone is off by default and only appears behind a tick, so the form asks
-   for one thing to reach the person by. It is disabled while hidden, so an
-   empty value never travels with the submission. */
+
 const telKell = document.querySelector('#f-tel-kell');
 const fldTel = document.querySelector('#fld-tel');
 const tel = document.querySelector('#f-tel');
