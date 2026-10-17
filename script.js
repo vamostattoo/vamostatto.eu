@@ -1,6 +1,6 @@
 
 
-const ENDPOINT = 'https://script.google.com/macros/s/AKfycbyDbws5aVgwn2FjPxe-WvP4KI60kpy6F5K4rVyFhwJzJxvOal747-XprMFLp2p7z4MzkA/exec';
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbyUpy1t1kYkB6_ZzxeiyzphMtrkijLRpp6fRhsVGm3lkFeo020mUb5dj_IQo9uj7Odhsw/exec';
 
 const MAX_FILE = 8 * 1024 * 1024;   /* fájlonként 8 MB */
 
