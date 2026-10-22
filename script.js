@@ -19,12 +19,47 @@ document.addEventListener('keydown', e => {
 
 /* ---------- hero video ---------- */
 
-/* Autoplay has already started by now; stop it for people whose system asks
-   for less motion. The first frame stays as a still picture. */
+/* The poster (the video's first frame) shows at once; the video itself is
+   fetched only after everything else on the page has loaded, so it never
+   competes with the text, fonts and photos. People whose system asks for
+   less motion, or whose browser is saving data, keep the still. */
 const heroVideo = document.querySelector('.hero-v');
-if (heroVideo && matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  heroVideo.removeAttribute('autoplay');
-  heroVideo.pause();
+const stillOnly = matchMedia('(prefers-reduced-motion: reduce)').matches
+  || (navigator.connection && navigator.connection.saveData);
+if (heroVideo && !stillOnly) {
+  const startVideo = () => {
+    heroVideo.muted = true;
+    heroVideo.src = heroVideo.dataset.src;
+    /* Refused autoplay (e.g. iOS Low Power Mode) just leaves the poster. */
+    heroVideo.play().catch(() => {});
+  };
+  if (document.readyState === 'complete') startVideo();
+  else addEventListener('load', startVideo, { once: true });
+}
+
+/* ---------- reviews ---------- */
+
+/* The Jotform widget is ~360 KB of script for a section near the bottom, so
+   it loads when the visitor comes within a screen or so of it, not with the
+   page. */
+const revWidget = document.querySelector('.rev-widget[data-embed]');
+if (revWidget) {
+  const loadReviews = () => {
+    const s = document.createElement('script');
+    s.src = revWidget.dataset.embed;
+    s.async = true;
+    document.body.append(s);
+  };
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      if (!entries.some(e => e.isIntersecting)) return;
+      io.disconnect();
+      loadReviews();
+    }, { rootMargin: '800px 0px' });
+    io.observe(revWidget);
+  } else {
+    loadReviews();
+  }
 }
 
 /* ---------- form ---------- */
