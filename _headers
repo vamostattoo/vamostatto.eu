@@ -1,0 +1,20 @@
+# Cloudflare Pages reads this file: how long a visitor's browser may keep a
+# file before asking for it again. Without it, every file is re-checked on
+# every visit.
+#
+# HTML, CSS and JS are left out on purpose: they change with every edit, so
+# they keep the default (always check for a newer version).
+# Images and the video are kept for a day, so a replaced photo shows up for
+# returning visitors by the next day at the latest. The fonts never change.
+
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/brand/*
+  Cache-Control: public, max-age=86400
+
+/assets/gallery/*
+  Cache-Control: public, max-age=86400
+
+/assets/studio/*
+  Cache-Control: public, max-age=86400
