@@ -19,8 +19,14 @@
   "description": "Fineline, mikrorealista és minimal tetoválás Szolnokon, privát stúdióban.",
   "email": "tattoo.vamos@gmail.com",
   "areaServed": { "@type": "City", "name": "Szolnok" },
-  "address": { "@type": "PostalAddress", "addressLocality": "Szolnok", "addressCountry": "HU" }
+  "address": { "@type": "PostalAddress", "addressLocality": "Szolnok", "addressCountry": "HU" },
+  "sameAs": ["https://www.instagram.com/vamos_tattoo/"]
 }
+</script>
+<script>
+  /* Preview of the all-black version: prod.html?sotet (see the end of styles.css).
+     Runs in the head so the light version never flashes first. */
+  if (/[?&]sotet\b/.test(location.search)) document.documentElement.classList.add('sotet');
 </script>
 </head>
 <body id="top">
@@ -34,7 +40,7 @@
     <nav id="menu" class="nav" aria-label="Fő menü">
       <a href="#rolam">Rólam</a>
       <a href="#munkaim">Munkáim</a>
-      <a href="#stilus">Stílus</a>
+      <a href="#gyik">GYIK</a>
       <a href="#foglalas">Foglalás</a>
       <a href="#tudnivalok">Tudnivalók</a>
       <a href="#jelentkezes" class="btn btn-p nav-cta">Időpontot kérek</a>
@@ -53,35 +59,29 @@
         <img class="hero-mark" src="assets/brand/vamos-wordmark-white.webp"
              alt="Vamos Tattoo" width="960" height="194">
         <p class="hero-sub">Fineline · Mikrorealizmus · Minimal — Szolnok</p>
-        <p class="hero-lede">
-          Olyan tetoválásokat szeretek készíteni, amelyekben magadra ismersz,
-          és amelyeket évek múlva is örömmel viselsz.
-        </p>
         <p class="cta-row">
           <a class="btn btn-l btn-w" href="#jelentkezes">Időpontot kérek</a>
           <a class="btn btn-l btn-o" href="#munkaim">Munkáim</a>
         </p>
       </div>
-      <figure class="hero-p">
-        <img src="assets/studio/3.webp"
-             alt="Vámos Norbert a stúdióban, bárszéken ülve"
-             width="900" height="1350" fetchpriority="high">
+      <figure class="hero-p" aria-hidden="true">
+        <video class="hero-v" autoplay muted loop playsinline preload="auto"
+               disablepictureinpicture disableremoteplayback>
+          <source src="assets/studio/hero.mp4" type="video/mp4">
+        </video>
       </figure>
     </div>
   </section>
 
   <section id="rolam" class="sec">
-    <div class="wrap two">
-      <div class="two-l">
-        <figure class="portre portre-l">
-          <img src="assets/studio/profil.png" alt="Vámos Norbert"
-               width="840" height="840" loading="lazy">
-        </figure>
-        <h2 class="rolam-nev">Vámos Norbert</h2>
-        <img class="rolam-mark" src="assets/brand/vamos-wordmark-black.webp"
-             alt="Vamos Tattoo" width="300" height="61" loading="lazy">
-      </div>
+    <div class="wrap two rolam">
+      <figure class="rolam-foto">
+        <img src="assets/studio/rolam.webp"
+             alt="Vámos Norbert a stúdióban, bárszéken ülve"
+             width="1000" height="1374" loading="lazy">
+      </figure>
       <div class="two-r prose">
+        <h2 class="vh">Vámos Norbert</h2>
         <p>
           A rajzolás és az alkotás már az iskolás éveimtől az életem része volt,
           amin keresztül jutottam el végül a tetováláshoz, amely most már több
@@ -130,16 +130,19 @@
       <figure class="g"><img src="assets/gallery/04-teknos-wanderlust.webp" alt="Mikrorealista teknős Wanderlust felirattal és körökkel" width="720" height="720" loading="lazy"></figure>
       <figure class="g"><img src="assets/gallery/05-szem-fonix.webp" alt="Szem és főnixmadár pontozott körökkel, alkaron" width="720" height="720" loading="lazy"></figure>
       <figure class="g"><img src="assets/gallery/06-buddha.webp" alt="Kettéválasztott Buddha-fej geometrikus vonalakkal" width="720" height="720" loading="lazy"></figure>
-      <blockquote class="g-note">
-        <p>
-          Különösen közel állnak hozzám a személyes történetekből születő
-          minták.
-        </p>
-      </blockquote>
+      <a class="g-insta" href="https://www.instagram.com/vamos_tattoo/" target="_blank" rel="noopener">
+        <svg class="ig" viewBox="0 0 24 24" width="30" height="30" aria-hidden="true" focusable="false">
+          <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          <circle cx="17.3" cy="6.7" r="1.1" fill="currentColor"/>
+        </svg>
+        <span class="g-insta-t">Az aktuális munkáimért látogass el az Instagram-oldalamra.</span>
+        <span class="g-insta-h">@vamos_tattoo</span>
+      </a>
     </div>
   </section>
 
-  <section id="stilus" class="sec sec-band">
+  <section id="gyik" class="sec sec-band">
     <div class="wrap">
       <header class="sec-h">
         <p class="eyebrow">Stílus és tervezés</p>
@@ -258,14 +261,6 @@
           </p>
         </li>
       </ol>
-
-      <aside class="inkness">
-        <img src="assets/brand/inkness-logo-black.webp" alt="Inkness Tattoo Care" width="96" height="96">
-        <p>
-          Az utókezelő krém külön vásárolható meg; az <strong>Inkness
-          Aftercare</strong> terméket nálam is be tudod szerezni.
-        </p>
-      </aside>
     </div>
   </section>
 
@@ -434,6 +429,13 @@
             állandóan nedves krémréteget. Az enyhe hámlás és viszketés a
             gyógyulás része lehet; ne vakard, és ne szedd le a leváló bőrt.
           </p>
+          <aside class="inkness">
+            <img src="assets/brand/inkness-logo-black.webp" alt="Inkness Tattoo Care" width="96" height="96" loading="lazy">
+            <p>
+              Az utókezelő krém külön vásárolható meg; az <strong>Inkness
+              Aftercare</strong> terméket nálam is be tudod szerezni.
+            </p>
+          </aside>
           <h4>Gyógyulás és további hidratálás</h4>
           <p>
             Az első két hétben különösen fontos a rendszeres tisztítás és
@@ -491,8 +493,6 @@
       </header>
       <div id="JFWebsiteWidget-01a0caab295070008a1b603b40ebd7d6ff87"></div>
       <script src="https://www.jotform.com/website-widgets/embed/01a0caab295070008a1b603b40ebd7d6ff87"></script>
-      </div>
-
     </div>
   </section>
 
@@ -616,12 +616,22 @@
     <nav class="ftr-nav" aria-label="Lábléc">
       <a href="#rolam">Rólam</a>
       <a href="#munkaim">Munkáim</a>
-      <a href="#stilus">Stílus</a>
+      <a href="#gyik">GYIK</a>
       <a href="#foglalas">Foglalás</a>
       <a href="#tudnivalok">Tudnivalók</a>
       <a href="#jelentkezes">Időpont</a>
     </nav>
-    <p class="ftr-m">Szolnok · privát stúdió<br>tattoo.vamos@gmail.com</p>
+    <p class="ftr-m">
+      Szolnok · privát stúdió<br>tattoo.vamos@gmail.com<br>
+      <a class="ftr-ig" href="https://www.instagram.com/vamos_tattoo/" target="_blank" rel="noopener">
+        <svg class="ig" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+          <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/>
+          <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+          <circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/>
+        </svg>
+        Instagram: @vamos_tattoo
+      </a>
+    </p>
   </div>
   <div class="wrap ftr-b">
     <p class="ftr-legal">
