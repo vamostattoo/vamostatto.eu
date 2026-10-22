@@ -17,6 +17,16 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && nav.classList.contains('open')) { setMenu(false); burger.focus(); }
 });
 
+/* ---------- hero video ---------- */
+
+/* Autoplay has already started by now; stop it for people whose system asks
+   for less motion. The first frame stays as a still picture. */
+const heroVideo = document.querySelector('.hero-v');
+if (heroVideo && matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  heroVideo.removeAttribute('autoplay');
+  heroVideo.pause();
+}
+
 /* ---------- form ---------- */
 
 const form = document.querySelector('#f');
