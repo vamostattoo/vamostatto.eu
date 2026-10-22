@@ -124,16 +124,12 @@ img { max-width: 100%; height: auto; display: block; }
   letter-spacing: .3em; text-transform: uppercase; color: var(--on-ink-2);
   margin: 26px 0 0;
 }
-.hero-lede {
-  font-size: clamp(20px, 2.4vw, 26px); line-height: 1.5; color: var(--on-ink);
-  max-width: 24ch; margin: 22px 0 0; font-weight: 300;
-}
 .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin: 34px 0 0; }
 
-/* The studio photograph is shot against a light backdrop, so it lands on the
-   ink hero as a lit panel — no frame needed, the tonal jump is the edge. */
+/* A silent looping video in a portrait frame. Cover crops whatever ratio it
+   arrives in to the frame; the dark ground shows while it loads. */
 .hero-p { margin: 0; aspect-ratio: 3 / 4; overflow: hidden; background: #1C1C1C; }
-.hero-p img { width: 100%; height: 100%; object-fit: cover; }
+.hero-p video { display: block; width: 100%; height: 100%; object-fit: cover; }
 
 /* ---------- section frame ---------- */
 
@@ -146,13 +142,18 @@ img { max-width: 100%; height: auto; display: block; }
 .two { display: grid; gap: clamp(28px, 5vw, 64px); grid-template-columns: .8fr 1.2fr; align-items: start; }
 .two-l h2 { font-size: clamp(30px, 4.2vw, 44px); }
 
-/* His face belongs next to his own words, not only in the hero. */
-.portre { margin: clamp(28px, 3vw, 38px) 0 0; max-width: 300px; }
-.portre img { width: 100%; }
-.portre figcaption {
-  margin-top: 12px; font-family: var(--f-d); font-size: 11px; font-weight: 600;
-  letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3);
-}
+/* Rólam: his photograph stands exactly as tall as his text — top on the
+   first line, bottom on the last. The image is out of flow, so the text
+   alone sets the height, and the column is narrow enough that cover only
+   trims empty backdrop at the sides, never his cap or his shoes. The
+   rounding is done here, so the crop cannot cut into a rounded corner. */
+.rolam { grid-template-columns: minmax(0, 360px) minmax(0, 1fr); align-items: stretch; }
+.rolam-foto { position: relative; margin: 0; overflow: hidden; border-radius: 34px; background: var(--band); }
+.rolam-foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 42% 50%; }
+
+/* Visually hidden, still read out and indexed. */
+.vh { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
 .prose { max-width: 62ch; color: var(--ink-2); }
 .prose p { font-size: 18px; }
 
@@ -165,18 +166,23 @@ img { max-width: 100%; height: auto; display: block; }
 .g { margin: 0; overflow: hidden; background: #1C1C1C; }
 .g img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; transition: transform .5s ease; }
 .g-hero { grid-column: span 2; grid-row: span 2; }
-/* Seven squares and one 2x2 tile leave two cells short of a full grid, so the
-   last two carry a line of his own writing instead of a gap. */
-.g-note {
-  grid-column: 1 / -1; margin: 0;
-  border: 1px solid var(--line-w); padding: clamp(26px, 3vw, 40px);
-  display: grid; align-content: center;
+/* The gallery is a sample; the current work lives on Instagram, so the row
+   under it sends people there. */
+.g-insta {
+  grid-column: 1 / -1;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px;
+  border: 1px solid var(--line-w); padding: clamp(22px, 2.6vw, 32px) clamp(24px, 3vw, 40px);
+  color: var(--on-ink); text-decoration: none;
+  transition: background .18s ease, border-color .18s ease;
 }
-.g-note p {
-  font-family: var(--f-b); font-size: clamp(19px, 2.2vw, 26px);
-  font-weight: 300; line-height: 1.5; color: var(--on-ink);
-  max-width: 28ch; margin: 0;
+.g-insta:hover { background: #1C1C1C; border-color: var(--on-ink-2); }
+.g-insta .ig { width: 30px; height: 30px; flex: 0 0 auto; }
+.g-insta-t { font-family: var(--f-b); font-size: clamp(19px, 2.2vw, 24px); font-weight: 300; line-height: 1.45; }
+.g-insta-h {
+  margin-left: auto; font-family: var(--f-d); font-size: 12px; font-weight: 600;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--on-ink-2);
 }
+.g-insta:hover .g-insta-h { color: var(--on-ink); }
 .g-hero img { aspect-ratio: auto; height: 100%; }
 .g:hover img { transform: scale(1.03); }
 @media (prefers-reduced-motion: reduce) { .g img, .g:hover img { transition: none; transform: none; } }
@@ -203,13 +209,15 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .fl p:not(.fl-k) { color: var(--ink-2); font-size: 16px; }
 
+/* Sits in the aftercare notes, right after the cream is named, on the
+   banded ground — so it takes the paper colour to stand off it. */
 .inkness {
-  margin-top: clamp(32px, 4vw, 48px); padding: 22px 26px;
-  background: var(--band); border: 1px solid var(--line);
-  display: flex; gap: 22px; align-items: center;
+  margin: 26px 0 0; padding: 20px 24px;
+  background: var(--paper); border: 1px solid var(--line);
+  display: flex; gap: 20px; align-items: center;
 }
-.inkness img { width: 72px; height: 72px; flex: 0 0 auto; }
-.inkness p { color: var(--ink-2); font-size: 16.5px; max-width: 56ch; }
+.inkness img { width: 64px; height: 64px; flex: 0 0 auto; }
+.tud-b .inkness p { color: var(--ink-2); font-size: 16px; max-width: 56ch; margin: 0; }
 
 /* ---------- long-form notes ---------- */
 
@@ -378,6 +386,9 @@ img { max-width: 100%; height: auto; display: block; }
      a letterbox crop. */
   .hero-p { max-width: 340px; }
   .two { grid-template-columns: 1fr; }
+  /* Stacked, there is no text column to match, so the photo shows whole. */
+  .rolam-foto { max-width: 420px; }
+  .rolam-foto img { position: static; height: auto; }
   .rev { grid-template-columns: 1fr; justify-items: start; }
   .revs { grid-template-columns: 1fr; }
   .form-in { grid-template-columns: 1fr; }
@@ -412,7 +423,6 @@ img { max-width: 100%; height: auto; display: block; }
 
 @media (max-width: 620px) {
   body { font-size: 17px; }
-  .hero-lede { max-width: none; }
   .cta-row .btn { flex: 1 1 auto; text-align: center; }
   .flow { grid-template-columns: 1fr; }
   .fl { border-right: 0; padding: 24px 0 26px; border-top: 1px solid var(--line); }
@@ -423,8 +433,9 @@ img { max-width: 100%; height: auto; display: block; }
   .row { grid-template-columns: 1fr; }
   .tud-ix ol { grid-template-columns: 1fr; }
   .gal { grid-template-columns: 1fr; }
-  .g-hero, .g-note { grid-column: auto; grid-row: auto; }
+  .g-hero { grid-column: auto; grid-row: auto; }
   .g-hero img { aspect-ratio: 1 / 1; height: auto; }
+  .g-insta-h { margin-left: 0; }
   .ftr-in { flex-direction: column; align-items: flex-start; }
   .ftr-nav { margin-inline: 0; }
   .ftr-by { margin-left: 0 !important; }
@@ -445,11 +456,6 @@ img { max-width: 100%; height: auto; display: block; }
   line-height: 1.2;
 }
 
-/* Rólam: photograph first and larger, then his name, then the wordmark. */
-.portre-l { max-width: 500px; }
-.two-l .rolam-nev { margin: clamp(18px, 2.4vw, 26px) 0 0; }
-.rolam-mark { width: 190px; height: auto; margin-top: 16px; }
-
 /* Phone sits behind its own tick, so it needs the checkbox frame on its own. */
 .fld-chk-tel { border: 1px solid var(--line-w); }
 
@@ -459,3 +465,46 @@ img { max-width: 100%; height: auto; display: block; }
   margin: 0; padding: 14px 16px; font-size: 16px;
   background: #1D1D1D; border: 1px solid #E5907F; color: #E5907F;
 }
+
+
+/* ---------- Norbert 2026-10-19 ---------- */
+
+/* Instagram, once more at the foot of the page, under the e-mail address. */
+.ftr-ig { display: inline-flex; align-items: center; gap: 8px; color: var(--on-ink); text-decoration: none; border-bottom: 1px solid var(--line-w); }
+.ftr-ig:hover { border-bottom-color: var(--on-ink); }
+.ftr-ig .ig { width: 16px; height: 16px; flex: 0 0 auto; }
+
+/* Reviews: only the carousel of written reviews, no score card above it.
+   Jotform's own "Widget header" switch does the same; this keeps it gone
+   even if that switch is turned back on. */
+#velemenyek .jf-reviews-header-card { display: none !important; }
+
+
+/* ---------- fekete változat (Norbert 2026-10-19) ----------
+   Only Rólam keeps the bone ground; everything else takes the booking form's
+   ink with bone type. Switched on by class="sotet" on <html>: the preview
+   link prod.html?sotet sets it, so both versions can be compared on the live
+   site. To keep this one, write class="sotet" into the <html> tag.
+
+   Inside these sections the light palette is pointed at its dark
+   counterpart, so every rule above that reads a token follows on its own. */
+.sotet .hdr,
+.sotet #gyik, .sotet #foglalas, .sotet #tudnivalok, .sotet #velemenyek {
+  --bone:  #141414;
+  --paper: #1D1D1D;
+  --band:  #141414;
+  --ink:   #EFEDE8;
+  --ink-2: #B9B6AF;
+  --ink-3: #8A8780;
+  --line:  rgba(255, 255, 255, .16);
+  color: var(--ink);
+}
+.sotet #gyik, .sotet #foglalas, .sotet #tudnivalok, .sotet #velemenyek { background: #141414; }
+.sotet #jelentkezes { border-top: 1px solid var(--line-w); }
+
+.sotet .hdr { background: rgba(20, 20, 20, .93); }
+/* The black wordmark and the black Inkness logo, turned light. */
+.sotet .brand img, .sotet .inkness img { filter: invert(1); }
+/* .btn fills with --ink, which is light here, so its label goes dark. */
+.sotet .nav a.nav-cta { color: #141414; }
+.sotet .nav a.nav-cta:hover { color: var(--ink); }
