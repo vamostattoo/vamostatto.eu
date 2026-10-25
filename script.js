@@ -42,19 +42,43 @@ if (heroVideo && !stillOnly) {
   else addEventListener('load', startVideo, { once: true });
 }
 
-/* ---------- reviews ---------- */
+/* ---------- cookie notice and reviews ---------- */
 
-/* The Jotform widget sets cookies and sends the visitor's IP address to
-   Jotform in the USA, so it is loaded only when the visitor asks for it.
-   Nothing is stored about the choice: the next visit asks again. */
+/* The site sets no cookies of its own. The Jotform reviews widget does (and
+   sends the visitor's IP address to the USA), so it is loaded only after the
+   visitor accepts in the notice. The choice is kept in localStorage, which is
+   not a cookie, for six months, so the notice does not return on every visit.
+   If storage is blocked the notice simply comes back next time. */
+const CC_KEY = 'vt-consent';
+const CC_TTL = 183 * 24 * 60 * 60 * 1000;
+const cc = document.querySelector('#cc');
 const revWidget = document.querySelector('.rev-widget[data-embed]');
 const revLoad = document.querySelector('.rev-load');
-if (revWidget && revLoad) {
-  revLoad.addEventListener('click', () => {
-    revWidget.replaceChildren();
-    revWidget.classList.add('on');
-    revWidget.tabIndex = -1;
-    revWidget.focus({ preventScroll: true });
+let ccChoice = null;   /* 'yes', 'no', or null when not asked yet or expired */
+
+try {
+  const saved = JSON.parse(localStorage.getItem(CC_KEY));
+  if (saved && (saved.v === 'yes' || saved.v === 'no') && Date.now() - saved.t < CC_TTL) ccChoice = saved.v;
+} catch (e) { /* blocked or unreadable: ask again */ }
+
+function saveChoice(v) {
+  ccChoice = v;
+  try { localStorage.setItem(CC_KEY, JSON.stringify({ v, t: Date.now() })); } catch (e) { /* blocked */ }
+}
+
+function openNotice(focus) {
+  if (!cc) return;
+  cc.hidden = false;
+  if (focus) cc.querySelector('.cc-btn').focus();
+}
+
+/* Accepted: the box is emptied and holds its space, and the widget's script is
+   fetched once the visitor is within a screen or so of it. */
+function showReviews() {
+  if (!revWidget) return;
+  revWidget.replaceChildren();
+  revWidget.classList.add('on');
+  const load = () => {
     const s = document.createElement('script');
     s.src = revWidget.dataset.embed;
     s.async = true;
@@ -63,7 +87,44 @@ if (revWidget && revLoad) {
       revWidget.textContent = 'Az értékeléseket most nem sikerült betölteni. Kérlek próbáld újra később.';
     };
     document.body.append(s);
+  };
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      if (!entries.some(e => e.isIntersecting)) return;
+      io.disconnect();
+      load();
+    }, { rootMargin: '800px 0px' });
+    io.observe(revWidget);
+  } else {
+    load();
+  }
+}
+
+if (cc) {
+  cc.addEventListener('click', e => {
+    const b = e.target.closest('[data-cc]');
+    if (!b) return;
+    const was = ccChoice;
+    saveChoice(b.dataset.cc);
+    cc.hidden = true;
+    if (b.dataset.cc === 'yes') {
+      if (was !== 'yes') showReviews();
+    } else if (was === 'yes') {
+      /* Withdrawn: the widget may already be on the page, so start afresh without it. */
+      location.reload();
+    }
   });
+  if (revLoad) revLoad.addEventListener('click', () => openNotice(true));
+  const footerBtn = document.querySelector('.ftr-cc');
+  if (footerBtn) footerBtn.addEventListener('click', () => openNotice(true));
+
+  if (ccChoice === 'yes') showReviews();
+  if (location.hash === '#sutibeallitasok') openNotice(true);
+  else if (ccChoice === null) {
+    const ask = () => setTimeout(() => openNotice(false), 400);
+    if (document.readyState === 'complete') ask();
+    else addEventListener('load', ask, { once: true });
+  }
 }
 
 /* ---------- form ---------- */
