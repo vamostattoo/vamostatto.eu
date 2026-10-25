@@ -107,21 +107,33 @@ img { max-width: 100%; height: auto; display: block; }
 
 /* ---------- hero ---------- */
 
-.hero { background: var(--ink); color: var(--on-ink); padding-block: clamp(56px, 9vw, 96px); }
-.hero-in { display: grid; gap: clamp(32px, 5vw, 56px); grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: center; }
-.hero-mark { width: min(100%, 460px); }
+/* The video fills the whole band and the text sits on top of it. The band keeps
+   the height it always had (about 560px), so the video is cropped top and
+   bottom on wide screens and at the sides on phones. */
+.hero {
+  position: relative; overflow: hidden; display: flex; align-items: center;
+  min-height: 560px;
+  background: var(--ink); color: var(--on-ink); padding-block: clamp(56px, 9vw, 96px);
+}
+.hero-in { width: 100%; }
+.hero-t { position: relative; z-index: 1; max-width: 520px; }
+.hero-h { margin: 0; font-size: inherit; line-height: 0; }
+.hero-mark { display: block; width: min(100%, 460px); }
 .hero-sub {
   font-family: var(--f-d); font-size: 11.5px; font-weight: 500;
-  letter-spacing: .3em; text-transform: uppercase; color: var(--on-ink-2);
+  letter-spacing: .3em; text-transform: uppercase; color: var(--on-ink);
   margin: 26px 0 0;
 }
 .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin: 34px 0 0; }
 
-/* A silent looping video, framed at its own 16:9 so no shot loses its edges.
-   The video column is the wider one; the poster fills the frame until the
-   video starts. */
-.hero-p { margin: 0; aspect-ratio: 16 / 9; overflow: hidden; background: #1C1C1C; }
+/* The poster fills the band until the video starts. The footage has a lot of
+   white paper and skin in it, so the side the text is on is darkened. */
+.hero-p { position: absolute; inset: 0; margin: 0; background: #1C1C1C; }
 .hero-p video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.hero-p::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(20, 20, 20, .9) 0%, rgba(20, 20, 20, .74) 40%, rgba(20, 20, 20, .3) 72%, rgba(20, 20, 20, .12) 100%);
+}
 
 /* ---------- section frame ---------- */
 
@@ -168,8 +180,9 @@ img { max-width: 100%; height: auto; display: block; }
   transition: background .18s ease, border-color .18s ease;
 }
 .g-insta:hover { background: #1C1C1C; border-color: var(--on-ink-2); }
-.g-insta .ig { width: 30px; height: 30px; flex: 0 0 auto; }
-.g-insta-t { font-family: var(--f-b); font-size: clamp(19px, 2.2vw, 24px); font-weight: 300; line-height: 1.45; }
+.g-insta .ig { width: 24px; height: 24px; flex: 0 0 auto; }
+/* Same size and weight as the body text in Rólam. */
+.g-insta-t { font-family: var(--f-b); font-size: 18px; font-weight: 400; line-height: 1.7; }
 .g-insta-h {
   margin-left: auto; font-family: var(--f-d); font-size: 12px; font-weight: 600;
   letter-spacing: .18em; text-transform: uppercase; color: var(--on-ink-2);
@@ -185,6 +198,7 @@ img { max-width: 100%; height: auto; display: block; }
 .card { background: var(--paper); padding: clamp(24px, 3vw, 34px); }
 .card h3 { font-size: 21px; margin-bottom: 14px; }
 .card p { color: var(--ink-2); font-size: 16.5px; }
+.card p + h3 { margin-top: 30px; }
 /* The one card that says no carries an ink edge — it is the exception. */
 .card-no { border-left: 3px solid var(--ink); }
 
@@ -238,6 +252,7 @@ img { max-width: 100%; height: auto; display: block; }
 .tud-b ul { margin: 0 0 1em; padding-left: 20px; }
 .tud-b li { margin-bottom: 7px; }
 .tud-b article { scroll-margin-top: 96px; }
+.tud-b h4[id] { scroll-margin-top: 96px; }
 
 /* ---------- reviews ---------- */
 
@@ -285,6 +300,8 @@ img { max-width: 100%; height: auto; display: block; }
   background: #1D1D1D; border: 1px solid var(--line-w); padding: 12px 14px;
 }
 .form textarea { resize: vertical; min-height: 104px; }
+/* The date box only needs two lines (its example wraps on a phone). */
+.form #f-mikor { min-height: 0; }
 .form input::placeholder, .form textarea::placeholder { color: #6E6B65; }
 .form input[type="text"]:focus, .form textarea:focus { border-color: var(--on-ink); }
 .form input[type="file"] { font: inherit; font-size: 14px; color: var(--on-ink-2); }
@@ -330,12 +347,18 @@ img { max-width: 100%; height: auto; display: block; }
 /* ---------- footer ---------- */
 
 .ftr { background: var(--ink); color: var(--on-ink); border-top: 1px solid var(--line-w); padding-block: 48px; }
-.ftr-in { display: flex; flex-wrap: wrap; gap: 28px 44px; align-items: center; }
-.ftr-mark { width: 150px; }
-.ftr-nav { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-inline: auto; }
+/* Logo on its own line; under it the menu and the contact details share one. */
+.ftr-in { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 30px 40px; align-items: center; }
+.ftr-mark { grid-column: 1 / -1; width: 150px; }
+.ftr-nav { display: flex; flex-wrap: wrap; gap: 8px 22px; }
 .ftr-nav a { font-family: var(--f-d); font-size: 11.5px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--on-ink-2); text-decoration: none; }
 .ftr-nav a:hover { color: var(--on-ink); }
-.ftr-m { margin: 0; font-size: 15px; color: var(--on-ink-2); line-height: 1.7; }
+/* Town, e-mail and the Instagram icon are set like the menu and share its line. */
+.ftr-m {
+  margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 22px; justify-self: end;
+  font-family: var(--f-d); font-size: 11.5px; font-weight: 500; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--on-ink-2);
+}
 
 .ftr-b {
   display: flex; flex-wrap: wrap; gap: 10px 32px; align-items: baseline;
@@ -372,8 +395,14 @@ img { max-width: 100%; height: auto; display: block; }
 
 /* ---------- breakpoints ---------- */
 
+@media (max-width: 1060px) {
+  .ftr-in { grid-template-columns: minmax(0, 1fr); }
+  .ftr-m { justify-self: start; }
+}
+
 @media (max-width: 1000px) {
-  .hero-in { grid-template-columns: 1fr; }
+  /* The text takes most of the width here, so the whole band is darkened. */
+  .hero-p::after { background: linear-gradient(90deg, rgba(20, 20, 20, .86) 0%, rgba(20, 20, 20, .62) 100%); }
   .two { grid-template-columns: 1fr; }
   /* Stacked, there is no text column to match, so the photo shows whole. */
   .rolam-foto { max-width: 420px; }
@@ -425,8 +454,6 @@ img { max-width: 100%; height: auto; display: block; }
   .g-hero { grid-column: auto; grid-row: auto; }
   .g-hero img { aspect-ratio: 1 / 1; height: auto; }
   .g-insta-h { margin-left: 0; }
-  .ftr-in { flex-direction: column; align-items: flex-start; }
-  .ftr-nav { margin-inline: 0; }
   .ftr-by { margin-left: 0 !important; }
 }
 
@@ -441,7 +468,10 @@ img { max-width: 100%; height: auto; display: block; }
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: .1em;
-  font-size: clamp(21px, 3.2vw, 36px);
+  /* The gallery is three equal columns, so the middle of the second picture is
+     half the gallery's width. The line is sized to end there; the 18px floor
+     keeps it readable on a phone, where it wraps. */
+  font-size: clamp(18px, calc(min(100vw - 2 * var(--gut), 1100px) * .0216), 26px);
   line-height: 1.2;
 }
 
@@ -457,15 +487,26 @@ img { max-width: 100%; height: auto; display: block; }
 
 /* ---------- Norbert 2026-10-19 ---------- */
 
-/* Instagram, once more at the foot of the page, under the e-mail address. */
-.ftr-ig { display: inline-flex; align-items: center; gap: 8px; color: var(--on-ink); text-decoration: none; border-bottom: 1px solid var(--line-w); }
-.ftr-ig:hover { border-bottom-color: var(--on-ink); }
-.ftr-ig .ig { width: 16px; height: 16px; flex: 0 0 auto; }
+/* Instagram at the foot of the page: just the icon, as a link. */
+.ftr-ig { display: inline-flex; color: var(--on-ink-2); text-decoration: none; }
+.ftr-ig:hover { color: var(--on-ink); }
+.ftr-ig .ig { width: 18px; height: 18px; flex: 0 0 auto; }
 
 
 #velemenyek .jf-reviews-header-card { display: none !important; }
 
-.rev-widget { min-height: 455px; }
+/* Until the visitor asks for the reviews there is only a short notice; once
+   they do, the widget's space is held so the form below does not jump. */
+.rev-widget:focus { outline: 0; }
+.rev-widget.on { min-height: 455px; }
+.rev-widget.on:empty::before { content: "Betöltés…"; color: var(--ink-2); font-family: var(--f-d); font-size: 14px; }
+.rev-gate { max-width: 62ch; padding: 26px 28px; background: var(--paper); border: 1px solid var(--line); }
+.rev-gate p { margin: 0 0 22px; font-size: 16px; line-height: 1.6; color: var(--ink-2); }
+.rev-gate .rev-load { background: var(--ink); border-color: var(--ink); color: var(--bone); }
+.rev-gate .rev-load:hover { background: transparent; color: var(--ink); }
+.rev-gate .rev-gate-n { margin: 18px 0 0; font-size: 14px; }
+.rev-gate-n a { color: var(--ink-2); }
+.rev-gate-n a:hover { color: var(--ink); }
 
 
 .sotet .hdr, .sotet main.sec,
