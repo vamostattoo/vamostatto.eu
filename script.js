@@ -22,14 +22,19 @@ document.addEventListener('keydown', e => {
 /* The poster (the video's first frame) shows at once; the video itself is
    fetched only after everything else on the page has loaded, so it never
    competes with the text, fonts and photos. People whose system asks for
-   less motion, or whose browser is saving data, keep the still. */
+   less motion, or whose browser is saving data, keep the still. The video
+   spans the whole page width, so screens wider than the 720p file get the
+   1080p one. */
 const heroVideo = document.querySelector('.hero-v');
 const stillOnly = matchMedia('(prefers-reduced-motion: reduce)').matches
   || (navigator.connection && navigator.connection.saveData);
 if (heroVideo && !stillOnly) {
   const startVideo = () => {
     heroVideo.muted = true;
-    heroVideo.src = heroVideo.dataset.src;
+    const slow = navigator.connection && /^(slow-2g|2g|3g)$/.test(navigator.connection.effectiveType);
+    heroVideo.src = matchMedia('(min-width: 1281px)').matches && heroVideo.dataset.srcHd && !slow
+      ? heroVideo.dataset.srcHd
+      : heroVideo.dataset.src;
     /* Refused autoplay (e.g. iOS Low Power Mode) just leaves the poster. */
     heroVideo.play().catch(() => {});
   };
@@ -39,27 +44,26 @@ if (heroVideo && !stillOnly) {
 
 /* ---------- reviews ---------- */
 
-/* The Jotform widget is ~360 KB of script for a section near the bottom, so
-   it loads when the visitor comes within a screen or so of it, not with the
-   page. */
+/* The Jotform widget sets cookies and sends the visitor's IP address to
+   Jotform in the USA, so it is loaded only when the visitor asks for it.
+   Nothing is stored about the choice: the next visit asks again. */
 const revWidget = document.querySelector('.rev-widget[data-embed]');
-if (revWidget) {
-  const loadReviews = () => {
+const revLoad = document.querySelector('.rev-load');
+if (revWidget && revLoad) {
+  revLoad.addEventListener('click', () => {
+    revWidget.replaceChildren();
+    revWidget.classList.add('on');
+    revWidget.tabIndex = -1;
+    revWidget.focus({ preventScroll: true });
     const s = document.createElement('script');
     s.src = revWidget.dataset.embed;
     s.async = true;
+    s.onerror = () => {
+      revWidget.classList.remove('on');
+      revWidget.textContent = 'Az értékeléseket most nem sikerült betölteni. Kérlek próbáld újra később.';
+    };
     document.body.append(s);
-  };
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver(entries => {
-      if (!entries.some(e => e.isIntersecting)) return;
-      io.disconnect();
-      loadReviews();
-    }, { rootMargin: '800px 0px' });
-    io.observe(revWidget);
-  } else {
-    loadReviews();
-  }
+  });
 }
 
 /* ---------- form ---------- */
