@@ -3,8 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Vamos Tattoo</title>
-<meta name="description" content="Fineline, mikrorealista és minimal tetoválás Szolnokon, privát stúdióban. Vámos Norbert munkái, tudnivalók és időpontfoglalás.">
+<title>Vamos Tattoo — fineline és mikrorealista tetoválás Szolnokon</title>
+<meta name="description" content="Fineline, mikrorealista és minimal tetoválás Szolnokon, privát stúdióban. Vámos Norbert munkái, tudnivalók, gyakori kérdések és online időpontfoglalás.">
+<meta name="theme-color" content="#141414">
+<link rel="canonical" href="https://vamostattoo.eu/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Vamos Tattoo">
+<meta property="og:locale" content="hu_HU">
+<meta property="og:title" content="Vamos Tattoo — fineline és mikrorealista tetoválás Szolnokon">
+<meta property="og:description" content="Fineline, mikrorealista és minimal tetoválás privát stúdióban, Szolnokon. Munkák, tudnivalók és online időpontfoglalás.">
+<meta property="og:url" content="https://vamostattoo.eu/">
+<meta property="og:image" content="https://vamostattoo.eu/assets/studio/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Vamos Tattoo — tetoválógép közelről, a stúdió feliratával">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -15,13 +28,31 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "TattooParlor",
-  "name": "Vamos Tattoo",
-  "description": "Fineline, mikrorealista és minimal tetoválás Szolnokon, privát stúdióban.",
-  "email": "tattoo.vamos@gmail.com",
-  "areaServed": { "@type": "City", "name": "Szolnok" },
-  "address": { "@type": "PostalAddress", "addressLocality": "Szolnok", "addressCountry": "HU" },
-  "sameAs": ["https://www.instagram.com/vamos_tattoo/"]
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://vamostattoo.eu/#website",
+      "url": "https://vamostattoo.eu/",
+      "name": "Vamos Tattoo",
+      "inLanguage": "hu",
+      "publisher": { "@id": "https://vamostattoo.eu/#studio" }
+    },
+    {
+      "@type": "TattooParlor",
+      "@id": "https://vamostattoo.eu/#studio",
+      "name": "Vamos Tattoo",
+      "url": "https://vamostattoo.eu/",
+      "description": "Fineline, mikrorealista és minimal tetoválás Szolnokon, privát stúdióban.",
+      "email": "tattoo.vamos@gmail.com",
+      "logo": "https://vamostattoo.eu/assets/apple-touch-icon.png",
+      "image": "https://vamostattoo.eu/assets/studio/og.jpg",
+      "areaServed": { "@type": "City", "name": "Szolnok" },
+      "address": { "@type": "PostalAddress", "addressLocality": "Szolnok", "addressCountry": "HU" },
+      "knowsAbout": ["Fineline tetoválás", "Mikrorealista tetoválás", "Minimal tetoválás"],
+      "founder": { "@type": "Person", "name": "Vámos Norbert", "jobTitle": "Tetováló" },
+      "sameAs": ["https://www.instagram.com/vamos_tattoo/"]
+    }
+  ]
 }
 </script>
 <script>
@@ -55,8 +86,11 @@
   <section class="hero">
     <div class="wrap hero-in">
       <div class="hero-t">
-        <img class="hero-mark" src="assets/brand/vamos-wordmark-white.webp"
-             alt="Vamos Tattoo" width="960" height="194">
+        <h1 class="hero-h">
+          <img class="hero-mark" src="assets/brand/vamos-wordmark-white.webp"
+               alt="Vamos Tattoo" width="960" height="194">
+          <span class="vh"> — fineline és mikrorealista tetoválás Szolnokon</span>
+        </h1>
         <p class="hero-sub">Fineline · Mikrorealizmus · Minimal&nbsp;—&nbsp;Szolnok</p>
         <p class="cta-row">
           <a class="btn btn-l btn-w" href="#jelentkezes">Időpontot kérek</a>
@@ -66,7 +100,8 @@
       <figure class="hero-p" aria-hidden="true">
         <!-- script.js starts the video once the rest of the page has loaded; until then the poster shows. -->
         <video class="hero-v" muted loop playsinline preload="none"
-               poster="assets/studio/hero-poster.webp" data-src="assets/studio/hero.mp4"
+               poster="assets/studio/hero-poster.webp"
+               data-src="assets/studio/hero.mp4" data-src-hd="assets/studio/hero-hd.mp4"
                width="1280" height="720" disablepictureinpicture disableremoteplayback></video>
       </figure>
     </div>
@@ -180,6 +215,14 @@
           </p>
         </article>
         <article class="card">
+          <h3>Munkarend</h3>
+          <p><strong>H–P: 08:00–17:00</strong></p>
+          <p>A tetoválások kizárólag előzetes időpontfoglalással készülnek.</p>
+          <p>
+            A munkaidő 17:00-kor ér véget, ezért az utolsó foglalható időpont a
+            minta méretétől és összetettségétől függően, legkésőbb 15:00-kor
+            kezdődhet. Egy alkalomra minimum 1,5 órával érdemes számolni.
+          </p>
           <h3>Korhatár</h3>
           <p>
             Kizárólag betöltött 18 éves kortól vállalok tetoválást, szülői
@@ -490,9 +533,20 @@
         <p class="eyebrow">Vélemények</p>
         <h2>Amit a vendégeim mondanak</h2>
       </header>
-      <!-- script.js loads the Jotform widget when the visitor scrolls near this section. -->
+      <!-- The widget sets cookies and talks to Jotform, so script.js loads it only after the button is pressed. -->
       <div id="JFWebsiteWidget-01a0caab295070008a1b603b40ebd7d6ff87" class="rev-widget"
-           data-embed="https://www.jotform.com/website-widgets/embed/01a0caab295070008a1b603b40ebd7d6ff87"></div>
+           data-embed="https://www.jotform.com/website-widgets/embed/01a0caab295070008a1b603b40ebd7d6ff87">
+        <div class="rev-gate">
+          <p>
+            A Google-értékeléseket a Jotform nevű szolgáltatás jeleníti meg. Ha
+            rákattintasz, a böngésződ kapcsolódik a Jotform (USA) szervereihez:
+            ők megkapják az IP-címedet, és sütiket helyeznek el nálad. Ezt csak
+            a hozzájárulásoddal teszem.
+          </p>
+          <button class="btn rev-load" type="button">Értékelések megjelenítése</button>
+          <p class="rev-gate-n"><a href="adatkezeles.html#ertekelesek">Részletek az adatkezelési tájékoztatóban</a></p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -580,8 +634,8 @@
       </div>
 
       <div class="fld">
-        <label for="f-mikor">Mikorra szeretnéd? <span class="opt">(nem kötelező)</span></label>
-        <input id="f-mikor" name="mikor" type="text" placeholder="Például: októberben, hétköznap délután">
+        <label for="f-mikor">Mi lenne az ideális időpont számodra? <span class="opt">(nem kötelező)</span></label>
+        <textarea id="f-mikor" name="mikor" rows="2" placeholder="Például: október 10–13., 10:00–14:00 (munkarendem H–P 08:00–17:00)"></textarea>
       </div>
 
       <div class="fld">
@@ -600,8 +654,11 @@
       </p>
       <p class="form-note">
         Az adataidat kizárólag az időpont egyeztetésére használom, és nem
-        adom tovább senkinek. 18 éven aluliaktól nem tudok jelentkezést
-        fogadni.
+        adom el senkinek. Az üzenetet és a csatolt képeket a Google rendszerei
+        tárolják (Gmail, Táblázatok, Drive). A kép csatolásával hozzájárulsz,
+        hogy megnézzem és megőrizzem. 18 éven aluliaktól nem tudok
+        jelentkezést fogadni.
+        <a href="adatkezeles.html">Az adatkezelési tájékoztató itt olvasható.</a>
       </p>
     </form>
   </div>
@@ -622,14 +679,14 @@
       <a href="#jelentkezes">Időpont</a>
     </nav>
     <p class="ftr-m">
-      Szolnok · privát stúdió<br>tattoo.vamos@gmail.com<br>
-      <a class="ftr-ig" href="https://www.instagram.com/vamos_tattoo/" target="_blank" rel="noopener">
-        <svg class="ig" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+      <span>Szolnok · privát stúdió</span>
+      <span>tattoo.vamos@gmail.com</span>
+      <a class="ftr-ig" href="https://www.instagram.com/vamos_tattoo/" target="_blank" rel="noopener" aria-label="Instagram: @vamos_tattoo" title="@vamos_tattoo">
+        <svg class="ig" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
           <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/>
           <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/>
           <circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/>
         </svg>
-        Instagram: @vamos_tattoo
       </a>
     </p>
   </div>
