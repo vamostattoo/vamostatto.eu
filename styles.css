@@ -541,3 +541,46 @@ img { max-width: 100%; height: auto; display: block; }
 .sotet .nav a.nav-cta:hover { color: var(--ink); }
 .sotet #velemenyek .jf-reviews-pagination-bullet > span { background: #5E5C57; }
 .sotet #velemenyek .jf-reviews-pagination-bullet.is-active > span { background: var(--ink); }
+
+
+
+/* ---------- cookie notice ---------- */
+
+/* Always dark, whichever version of the page is showing. Both answers are the
+   same button, side by side: declining is exactly as easy as accepting. */
+.cc {
+  position: fixed; z-index: 60; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  width: min(720px, calc(100% - 24px)); transform: translateX(-50%);
+  padding: 22px 24px; background: #1D1D1D; color: #EFEDE8;
+  border: 1px solid rgba(255, 255, 255, .28); box-shadow: 0 12px 40px rgba(0, 0, 0, .5);
+  animation: cc-in .3s ease both;
+}
+.cc[hidden] { display: none; }
+@keyframes cc-in { from { opacity: 0; transform: translate(-50%, 16px); } to { opacity: 1; transform: translate(-50%, 0); } }
+@media (prefers-reduced-motion: reduce) { .cc { animation: none; } }
+.cc-t { margin: 0 0 8px; font-family: var(--f-d); font-size: 11px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: #9B9891; }
+.cc-d { margin: 0 0 18px; font-size: 15.5px; line-height: 1.6; color: #EFEDE8; }
+.cc-d a { color: #EFEDE8; }
+.cc-b { display: flex; gap: 12px; }
+.cc-btn {
+  flex: 1 1 0; padding: 14px 18px; cursor: pointer;
+  font-family: var(--f-d); font-size: 12px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase;
+  background: transparent; color: #EFEDE8; border: 1px solid #EFEDE8;
+  transition: background .18s ease, color .18s ease;
+}
+.cc-btn:hover { background: #EFEDE8; color: #141414; }
+.cc :focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+/* A visitor who accepted earlier gets the reviews box at its final height
+   straight away, and never sees the "please accept" box flash up. */
+.cc-yes .rev-gate { display: none; }
+.cc-yes .rev-widget { min-height: 455px; }
+
+/* "Süti-beállítások" in the foot, set like the link beside it. */
+.ftr-cc {
+  margin: 0 0 0 24px; padding: 0; cursor: pointer; background: none; border: 0;
+  border-bottom: 1px solid var(--line-w); color: var(--on-ink);
+  font: inherit; letter-spacing: inherit; text-transform: inherit;
+}
+.ftr-cc:hover { border-bottom-color: var(--on-ink); }
+.ftr-cc-l { margin-left: 24px; }
