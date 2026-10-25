@@ -57,11 +57,27 @@
 </script>
 <script>
   if (/[?&]vilagos\b/.test(location.search)) document.documentElement.classList.remove('sotet');
+  /* A saved "yes" to the cookie notice (six months) is known before the first paint. */
+  try { var c = JSON.parse(localStorage.getItem('vt-consent')); if (c && c.v === 'yes' && Date.now() - c.t < 15811200000) document.documentElement.classList.add('cc-yes'); } catch (e) {}
 </script>
 </head>
 <body id="top">
 <a class="skip" href="#fo">Ugrás a tartalomra</a>
 
+<div class="cc" id="cc" role="dialog" aria-modal="false" aria-labelledby="cc-t" aria-describedby="cc-d" hidden>
+  <p class="cc-t" id="cc-t">Sütik és külső tartalom</p>
+  <p class="cc-d" id="cc-d">
+    Az oldal maga nem használ sütiket. A Google-értékeléseket viszont a Jotform
+    (USA) jeleníti meg: ha elfogadod, a böngésződ kapcsolódik hozzájuk, ők
+    megkapják az IP-címedet, és sütiket helyeznek el nálad. Ha elutasítod, az
+    értékelések nem jelennek meg, minden más ugyanúgy működik.
+    <a href="adatkezeles.html#ertekelesek">Részletek</a>
+  </p>
+  <div class="cc-b">
+    <button class="cc-btn" type="button" data-cc="yes">Elfogadom</button>
+    <button class="cc-btn" type="button" data-cc="no">Elutasítom</button>
+  </div>
+</div>
 <header class="hdr">
   <div class="wrap hdr-in">
     <a class="brand" href="#top" aria-label="Vamos Tattoo — vissza a lap tetejére">
@@ -538,12 +554,11 @@
            data-embed="https://www.jotform.com/website-widgets/embed/01a0caab295070008a1b603b40ebd7d6ff87">
         <div class="rev-gate">
           <p>
-            A Google-értékeléseket a Jotform nevű szolgáltatás jeleníti meg. Ha
-            rákattintasz, a böngésződ kapcsolódik a Jotform (USA) szervereihez:
-            ők megkapják az IP-címedet, és sütiket helyeznek el nálad. Ezt csak
-            a hozzájárulásoddal teszem.
+            A Google-értékeléseket a Jotform nevű szolgáltatás jeleníti meg: ő
+            megkapja az IP-címedet, és sütiket helyez el nálad. Ezt csak a
+            hozzájárulásoddal teszem.
           </p>
-          <button class="btn rev-load" type="button">Értékelések megjelenítése</button>
+          <button class="btn rev-load" type="button">Értékelések mutatása</button>
           <p class="rev-gate-n"><a href="adatkezeles.html#ertekelesek">Részletek az adatkezelési tájékoztatóban</a></p>
         </div>
       </div>
@@ -693,6 +708,7 @@
   <div class="wrap ftr-b">
     <p class="ftr-legal">
       <a href="adatkezeles.html">Adatkezelési tájékoztató</a>
+      <button class="ftr-cc" type="button">Süti-beállítások</button>
     </p>
     <p class="ftr-by">
       Fejlesztette:
