@@ -66,7 +66,6 @@ function doPost(e) {
       kepek.forEach(function (f) {
         const blob = Utilities.newBlob(Utilities.base64Decode(f.data), f.type, f.name);
         const file = mappa.createFile(blob);
-        file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
         linkek.push(file.getUrl());
       });
     }
