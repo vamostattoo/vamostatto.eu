@@ -74,6 +74,8 @@ kérte.
   Ez bőven a valós forgalom fölött van.
 - A base64 kódolás ~33%-kal növeli a méretet, és az Apps Script kérésnek van
   felső határa, ezért van 8 MB-os korlát fájlonként a fenti kódban.
-- A Drive-ra kerülő képek „bárki a linkkel megnézheti" jogot kapnak, hogy a
-  táblázatból egy kattintással megnyíljanak. Ha ez nem tetszik, vedd ki a
-  `setSharing` sort — akkor viszont csak bejelentkezve látszanak.
+- A Drive-ra kerülő képek privátak maradnak: csak abból a Google-fiókból
+  nyithatók meg, amelyben a szkript fut. A táblázatból egy kattintással
+  így is megnyílnak, ha be vagy jelentkezve. (A vendégek képei adatvédelmi
+  szempontból érzékenyek lehetnek, ezért nincs rajtuk „bárki a linkkel"
+  jog.)
