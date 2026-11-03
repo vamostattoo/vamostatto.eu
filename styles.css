@@ -189,6 +189,13 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .g-insta:hover .g-insta-h { color: var(--on-ink); }
 .g-hero img { aspect-ratio: auto; height: 100%; }
+/* Ten photos leave one picture alone in the last row of three. The Instagram
+   link takes the other two cells there, instead of sitting under an empty gap.
+   Below 861px the gallery is two columns (five full rows) and it is a full row again. */
+@media (min-width: 861px) {
+  .g-insta-in { grid-column: span 2; flex-direction: column; align-items: flex-start; justify-content: space-between; }
+  .g-insta-in .g-insta-h { margin-left: 0; }
+}
 .g:hover img { transform: scale(1.03); }
 @media (prefers-reduced-motion: reduce) { .g img, .g:hover img { transition: none; transform: none; } }
 
@@ -490,6 +497,17 @@ img { max-width: 100%; height: auto; display: block; }
   line-height: 1.2;
 }
 
+/* Norbert 2026-11-01: on a phone the whole line stays on one line. The text is
+   about 22.4 times as wide as its font size at this letter-spacing (measured),
+   so dividing the usable width by 23.1 leaves roughly 3% to spare. */
+@media (max-width: 480px) {
+  .gal-h .gal-styles {
+    font-size: min(18px, calc((100vw - 2 * var(--gut)) / 23.1));
+    letter-spacing: .08em;
+    white-space: nowrap;
+  }
+}
+
 .fld-chk-tel { border: 1px solid var(--line-w); }
 
 /* Küldési hiba az űrlap alatt — ugyanaz a doboz, mint a sikerüzenet,
@@ -525,7 +543,7 @@ img { max-width: 100%; height: auto; display: block; }
 
 
 .sotet .hdr, .sotet main.sec,
-.sotet #gyik, .sotet #foglalas, .sotet #tudnivalok, .sotet #velemenyek {
+.sotet #gyik, .sotet #tudnivalok, .sotet #velemenyek {
   --bone:  #141414;
   --paper: #1D1D1D;
   --band:  #141414;
@@ -536,7 +554,13 @@ img { max-width: 100%; height: auto; display: block; }
   color: var(--ink);
 }
 .sotet main.sec,
-.sotet #gyik, .sotet #foglalas, .sotet #tudnivalok, .sotet #velemenyek { background: #141414; }
+.sotet #gyik, .sotet #tudnivalok, .sotet #velemenyek { background: #141414; }
+
+/* Norbert 2026-11-01: a dense run of dark sections follows Munkáim, so the
+   booking steps get the light page (white text-block, black type). It keeps the
+   light tokens from :root, so nothing inside needs restyling. Tudnivalók below
+   stays dark. */
+#foglalas { background: #F6F5F2; }
 .sotet #jelentkezes { border-top: 1px solid var(--line-w); }
 
 .sotet .hdr { background: rgba(20, 20, 20, .93); }
