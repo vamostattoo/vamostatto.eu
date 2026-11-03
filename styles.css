@@ -189,13 +189,6 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .g-insta:hover .g-insta-h { color: var(--on-ink); }
 .g-hero img { aspect-ratio: auto; height: 100%; }
-/* Ten photos leave one picture alone in the last row of three. The Instagram
-   link takes the other two cells there, instead of sitting under an empty gap.
-   Below 861px the gallery is two columns (five full rows) and it is a full row again. */
-@media (min-width: 861px) {
-  .g-insta-in { grid-column: span 2; flex-direction: column; align-items: flex-start; justify-content: space-between; }
-  .g-insta-in .g-insta-h { margin-left: 0; }
-}
 .g:hover img { transform: scale(1.03); }
 @media (prefers-reduced-motion: reduce) { .g img, .g:hover img { transition: none; transform: none; } }
 
@@ -561,7 +554,43 @@ img { max-width: 100%; height: auto; display: block; }
    light tokens from :root, so nothing inside needs restyling. Tudnivalók below
    stays dark. */
 #foglalas { background: #F6F5F2; }
-.sotet #jelentkezes { border-top: 1px solid var(--line-w); }
+/* Norbert 2026-11-03: the booking form block on the light page as well, like the
+   booking steps above it. The block is built from the tokens, so it is turned
+   round here: light ground, dark type. (?vilagos, the old light version of the
+   page, keeps its dark form block.) */
+.sotet #jelentkezes {
+  --ink: #F6F5F2;
+  --on-ink: #141414;
+  --on-ink-2: #55534E;
+  --line-w: rgba(20, 20, 20, .38);
+}
+.sotet #jelentkezes :focus-visible { outline-color: #141414; }
+/* Order matters: resting border, then focus, then error (an error stays red while typing). */
+.sotet #jelentkezes .form input[type="text"],
+.sotet #jelentkezes .form input[type="email"],
+.sotet #jelentkezes .form input[type="tel"],
+.sotet #jelentkezes .form textarea { background: #FFFFFF; border-color: #8A8882; }
+.sotet #jelentkezes .form input[type="text"]:focus,
+.sotet #jelentkezes .form input[type="email"]:focus,
+.sotet #jelentkezes .form input[type="tel"]:focus,
+.sotet #jelentkezes .form textarea:focus { border-color: #141414; }
+.sotet #jelentkezes .fld.bad input[type="text"],
+.sotet #jelentkezes .fld.bad input[type="email"],
+.sotet #jelentkezes .fld.bad input[type="tel"],
+.sotet #jelentkezes .fld.bad textarea { border-color: #B23A27; }
+.sotet #jelentkezes .form input::placeholder,
+.sotet #jelentkezes .form textarea::placeholder { color: #6F6C66; }
+.sotet #jelentkezes .chk-note,
+.sotet #jelentkezes .form-ok { background: #FFFFFF; }
+.sotet #jelentkezes .fld.off label,
+.sotet #jelentkezes .fld.off .hint,
+.sotet #jelentkezes .fld.off .req,
+.sotet #jelentkezes .fld.off .opt { color: #A8A59E; }
+.sotet #jelentkezes .form input:disabled,
+.sotet #jelentkezes .form textarea:disabled { background: #EFEDE8; border-color: rgba(20, 20, 20, .10); color: #A8A59E; }
+.sotet #jelentkezes .form input:disabled::placeholder { color: #BDBAB3; }
+.sotet #jelentkezes .err { color: #B23A27; }
+.sotet #jelentkezes .form-fail { background: #FFFFFF; border-color: #B23A27; color: #B23A27; }
 
 .sotet .hdr { background: rgba(20, 20, 20, .93); }
 /* The black wordmark and the black Inkness logo, turned light. */
