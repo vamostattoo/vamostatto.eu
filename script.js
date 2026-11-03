@@ -1,6 +1,6 @@
 
 
-const ENDPOINT = 'https://script.google.com/macros/s/AKfycbw4ndhffRn7bea4PcBsixaR3ubk_9_Gfnw5-8JmhNujTJBi5eJeLZ_o6BzBvDFj3ohttg/exec';
+const ENDPOINT = 'https://script.google.com/macros/s/AKfycbxneo8vEsBM1j1w7wevVHtlwFtclSZimNqn16bpL_J1OnthuAM3BNa4UX5JD0_Rre3RJA/exec';
 
 const MAX_FILE = 8 * 1024 * 1024;   /* fájlonként 8 MB */
 const MAX_FILES = 5;                /* legfeljebb ennyi kép */
