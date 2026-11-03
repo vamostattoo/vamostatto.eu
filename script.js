@@ -3,6 +3,29 @@
 const ENDPOINT = 'https://script.google.com/macros/s/AKfycbyUpy1t1kYkB6_ZzxeiyzphMtrkijLRpp6fRhsVGm3lkFeo020mUb5dj_IQo9uj7Odhsw/exec';
 
 const MAX_FILE = 8 * 1024 * 1024;   /* fájlonként 8 MB */
+const MAX_FILES = 5;                /* legfeljebb ennyi kép */
+const MAX_TOTAL = 20 * 1024 * 1024; /* együtt legfeljebb 20 MB */
+/* Ugyanezt a szerver (Apps Script) is ellenőrzi, a fájl tartalma alapján —
+   ez itt csak azért van, hogy a látogató azonnal, magyarul kapjon választ. */
+const KEP_NEV = /\.(jpe?g|png|webp|heic|heif)$/i;
+const KEP_TIPUS = /^image\/(jpeg|png|webp|heic|heif)$/i;
+const KEP_SUGO = ' Legfeljebb 5 kép (jpg, png, webp vagy heic), egyenként 8 MB-ig.';
+
+/* A kiválasztott képek hibája magyarul, vagy '' ha rendben vannak. */
+function kepHiba(files) {
+  if (files.length > MAX_FILES) return 'Legfeljebb ' + MAX_FILES + ' képet tudok fogadni.';
+  let total = 0;
+  for (const f of files) {
+    /* Egyes böngészők a HEIC-nek nem adnak típust, ilyenkor a kiterjesztés dönt. */
+    if (!(f.type ? KEP_TIPUS.test(f.type) : KEP_NEV.test(f.name))) {
+      return f.name + ': csak jpg, png, webp vagy heic kép küldhető.';
+    }
+    if (f.size > MAX_FILE) return f.name + ' nagyobb 8 MB-nál, kérlek küldj kisebbet.';
+    total += f.size;
+  }
+  if (total > MAX_TOTAL) return 'A képek együtt túl nagyok (legfeljebb 20 MB), kérlek válassz kevesebbet vagy kisebbeket.';
+  return '';
+}
 
 const burger = document.querySelector('.burger');
 const nav = document.querySelector('.nav');
@@ -205,9 +228,9 @@ function applyMode() {
   noteElso.hidden = !elso.checked;
 
   optKep.textContent = c ? '(kötelező)' : '(nem kötelező)';
-  hintKep.textContent = c
+  hintKep.textContent = (c
     ? 'Egy éles fotó a gyógyult tetoválásról, arról a részről, ami javítást igényelhet.'
-    : 'Inspirációs képek, vagy takarás esetén a meglévő tetoválás.';
+    : 'Inspirációs képek, vagy takarás esetén a meglévő tetoválás.') + KEP_SUGO;
   lblOtlet.textContent = c ? 'Mit javítanál rajta?' : 'Mi az elképzelésed?';
   form.otlet.placeholder = c
     ? 'Írd le, melyik résszel nem vagy elégedett, és mikor készült a tetoválás.'
@@ -265,6 +288,9 @@ form.addEventListener('submit', async e => {
   if (korr.checked && kepek.files.length === 0) {
     fail(kepek, 'Korrekcióhoz kérlek csatolj egy éles fotót a gyógyult tetoválásról.');
     bad ||= kepek;
+  } else {
+    const kh = kepHiba([...kepek.files]);
+    if (kh) { fail(kepek, kh); bad ||= kepek; }
   }
 
   if (bad) { bad.focus(); return; }
@@ -282,7 +308,6 @@ form.addEventListener('submit', async e => {
   try {
     const files = [];
     for (const f of kepek.files) {
-      if (f.size > MAX_FILE) throw new Error(f.name + ' nagyobb 8 MB-nál, kérlek küldj kisebbet.');
       files.push(await toBase64(f));
     }
 
@@ -332,4 +357,8 @@ form.addEventListener('submit', async e => {
 [...form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea')].forEach(f =>
   f.addEventListener('input', () => clear(f))
 );
-form.kepek.addEventListener('change', () => clear(form.kepek));
+form.kepek.addEventListener('change', () => {
+  clear(form.kepek);
+  const kh = kepHiba([...form.kepek.files]);
+  if (kh) fail(form.kepek, kh);
+});
